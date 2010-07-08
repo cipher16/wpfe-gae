@@ -24,8 +24,8 @@
 		(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)
 // ]]>
 	</script>
-	<link rel="alternate" type="application/rss+xml" href="RSSUrl" title="{{}}" />
-	<link rel="alternate" type="application/rss+xml" href="RSS2URL" title="{{}}" />
+	<link rel="alternate" type="application/rss+xml" href="RSSUrl" title="" />
+	<link rel="alternate" type="application/rss+xml" href="RSS2URL" title="" />
 	<link rel="pingback" href="pingBackUrl" />
 </head>
 <body>
@@ -43,3 +43,17 @@
 		</div><!-- #access -->
 
 	</div><!--  #header-wrap -->
+<!-- Fin HEADER -->	
+	{% block content %}{% endblock %}
+<!-- Debut FOOTER -->
+				<div id="footer">
+				<span id="generator-link"><a href="http://wordpress.org/" title="Theme WordPress" rel="generator">WordPress</a></span>
+				<span class="meta-sep">|</span>
+				<span id="theme-link"><a href="http://somadesign.ca/" rel="designer nofollow"">The Erudite</a></span>
+			</div><!-- #footer -->
+		</div><!-- #footer-wrap-inner -->
+	</div><!-- #footer-wrap -->
+
+</div><!-- #wrapper .hfeed -->
+</body>
+</html>

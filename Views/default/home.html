@@ -1,28 +1,29 @@
-{{ ssi "/home/cipher16/Documents/Soft/appengine/wpfe/Views/default/header.html" }}
+{% extends ParentTmpl %}
+{% block content %}
 	<div id="container">
 		<div id="content" role="main">
-
-{% for article in articles %}
-	<div id="post-{{ article.id }}">
-		<h2 class="entry-title"><a href="{{ article.link }}" title="{{ article.title }}" rel="bookmark">{{ article.title }}</a></h2>
-		<div class="entry-content">
-			<p class="more-link"><a href="{{ article.link }}" title="{{ article.title }}">Lire la suite</a></p>
-			<hr />
-		</div>
-		<div class="entry-meta">
-			<span class="entry-date"><abbr class="published" title="{{ article.date }}">{{ article.date }}</abbr></span>
-			<span class="meta-sep">|</span>
-			<span class="author vcard">{{ article.author }}</span>
-			<span class="meta-sep">|</span>
-			<span class="cat-links">CATEGORIE</span>
-			<span class="meta-sep">|</span>
-			<span class="comments-link">Commentaires (0)</span>
-		</div>
-	</div>
-{% endfor %}
+			{% for article in articles %}
+				<div id="post-{{ article.id }}">
+					<h2 class="entry-title"><a href="{{ article.link }}" title="{{ article.title }}" rel="bookmark">{{ article.title }}</a></h2>
+					<div class="entry-content">
+						<p class="more-link"><a href="{{ article.link }}" title="{{ article.title }}">Lire la suite</a></p>
+						<hr />
+					</div>
+					<div class="entry-meta">
+						<span class="entry-date"><abbr class="published" title="{{ article.date }}">{{ article.date }}</abbr></span>
+						<span class="meta-sep">|</span>
+						<span class="author vcard">{{ article.author }}</span>
+						<span class="meta-sep">|</span>
+						<span class="cat-links">CATEGORIE</span>
+						<span class="meta-sep">|</span>
+						<span class="comments-link">Commentaires (0)</span>
+					</div>
+				</div>
+			{% endfor %}
 			<div id="nav-below" class="navigation">
 				<div class="nav-previous"> &lt;== </div>
 				<div class="nav-next"> ==&gt; </div>
 			</div>
 		</div><!-- #content -->
 	</div><!-- #container -->
+{% endblock %}

@@ -8,7 +8,7 @@ class Home(webapp.RequestHandler):
         ar = WPArticles.getArticles(10)
         template_values = {
            'articles': ar,
-           'headerTemp':wpfe.TEMPLATE+"/header.html"
+           'ParentTmpl': wpfe.TEMPLATE+"/index.html"
         }
         path = wpfe.TEMPLATE+"/home.html"
         self.response.out.write(template.render(path, template_values))
