@@ -3,10 +3,11 @@ from xml.dom.minidom import parseString
 
 from google.appengine.ext import db
 from Models.WordPress import *
+from Lib.DateTime import date
 
-class MainPage(webapp.RequestHandler):
+class WPImporter(webapp.RequestHandler):
     def get(self):
-        self.response.out.write("Upload de fichiers<form method='post' enctype=\"multipart/form-data\" action=\"/\"><input type=\"file\" name=\"myfile\" /><input type=\"submit\" /></form>")
+        self.response.out.write("Upload de fichiers<form method='post' enctype=\"multipart/form-data\" action=\"/admin/import\"><input type=\"file\" name=\"myfile\" /><input type=\"submit\" /></form>")
     def post(self):
         #as the file is may be to big to be stored, we start processing :s
         file_contents = self.request.get('myfile')
@@ -51,7 +52,7 @@ class MainPage(webapp.RequestHandler):
         #importation des articles
         for cat in dom.getElementsByTagName('channel')[0].getElementsByTagName('item'):
             id =     cat.getElementsByTagName('wp:post_id')[0].childNodes[0].nodeValue
-            date =   cat.getElementsByTagName('wp:post_date')[0].childNodes[0].nodeValue
+            Postdate =   cat.getElementsByTagName('wp:post_date')[0].childNodes[0].nodeValue
             status = cat.getElementsByTagName('wp:status')[0].childNodes[0].nodeValue
             title = cat.getElementsByTagName('title')[0].childNodes[0].nodeValue
             link = cat.getElementsByTagName('link')[0].childNodes[0].nodeValue
@@ -66,6 +67,7 @@ class MainPage(webapp.RequestHandler):
                         if com.getElementsByTagName("wp:comment_approved")[0].childNodes[0].nodeValue=="1":
                             comAR = ""
                             comAe = ""
+                            comDa = com.getElementsByTagName("wp:comment_date")[0].childNodes[0].nodeValue
                             comId = com.getElementsByTagName("wp:comment_id")[0].childNodes[0].nodeValue
                             comAu = com.getElementsByTagName("wp:comment_author")[0].childNodes[0].wholeText
                             if len(com.getElementsByTagName("wp:comment_author_email")[0].childNodes)>0:
@@ -79,6 +81,7 @@ class MainPage(webapp.RequestHandler):
                             if not r:
                                 nCom = BlogComments()
                                 nCom.idP = int(comId)
+                                nCom.date = date.StrToDateTime(comDa)
                                 nCom.author = comAu
                                 nCom.authorIp = comAI
                                 nCom.authorMail = comAe
@@ -99,7 +102,7 @@ class MainPage(webapp.RequestHandler):
                 if not r and cont!="":
                     n = BlogPost()
                     n.idP = int(id)
-                    #n.date = datetime(date)
+                    n.date = date.StrToDateTime(Postdate)
                     n.title = title
                     n.author = author
                     n.status = status

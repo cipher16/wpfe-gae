@@ -4,5 +4,9 @@ runtime: python
 api_version: 1
 
 handlers:
+- url: /admin/.*
+  script: wpfe.py
+  login: admin
+
 - url: /.*
   script: wpfe.py
