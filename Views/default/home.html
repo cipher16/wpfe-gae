@@ -1,29 +1,32 @@
 {% extends ParentTmpl %}
 {% block content %}
-	<div id="container">
-		<div id="content" role="main">
-			{% for article in articles %}
-				<div id="post-{{ article.id }}">
-					<h2 class="entry-title"><a href="{{ article.link }}" title="{{ article.title }}" rel="bookmark">{{ article.title }}</a></h2>
-					<div class="entry-content">
-						<p class="more-link"><a href="{{ article.link }}" title="{{ article.title }}">Lire la suite</a></p>
-						<hr />
-					</div>
-					<div class="entry-meta">
-						<span class="entry-date"><abbr class="published" title="{{ article.date }}">{{ article.date }}</abbr></span>
-						<span class="meta-sep">|</span>
-						<span class="author vcard">{{ article.author }}</span>
-						<span class="meta-sep">|</span>
-						<span class="cat-links">CATEGORIE</span>
-						<span class="meta-sep">|</span>
-						<span class="comments-link">Commentaires (0)</span>
-					</div>
+<div id="container">
+	<div id="content">
+		{% for article in articles %}
+			<div id="post-{{ article.idP }}" class="post hentry category-uncategorized tag-2 tag-green-park tag-greenpark tag-list tag-theme tag-todo tag-todolist tag-two tag-wordpress">
+				<h2><a href="{{ article.link }}" rel="bookmark" title="{{ article.title }}">{{ article.title }}</a></h2>
+				<small class="meta">
+					<span class="alignleft">{{ article.date }} par {{ article.author }}</span>
+					<span class="alignright"><a href="{{article.link}}#comments" class="button-style" rel="nofollow">{{article.comments|length}} commentaire{{article.comments|pluralize}} &#187;</a></span>
+        		</small>
+				<div class="entry">
+					{{article.resume}}
 				</div>
-			{% endfor %}
-			<div id="nav-below" class="navigation">
-				<div class="nav-previous"> &lt;== </div>
-				<div class="nav-next"> ==&gt; </div>
+				<div class="postmetadata clearfix">
+		          <p class="commentslink alignright">
+		            <a href="{{article.link}}#comments" rel="nofollow"> {{article.comments|length}} commentaire{{article.comments|pluralize}} &#187;</a>  
+		          </p>
+				  <p class="categories">
+					Publié dans la catégorie : une cat 
+		          </p>
+				  <p class="tags">Tags: les tags</p>
+		        </div>
 			</div>
-		</div><!-- #content -->
-	</div><!-- #container -->
+		{% endfor %}
+		<div class="pagination navigation clearfix">
+  		  <div class="alignleft"><a href="/page/{{nxtPage}}">Articles plus vieux</a></div>
+	      <div class="alignright">{% ifnotequal page 0 %}<a href="/page/{{prvPage}}">Articles plus récent</a>{% endifnotequal %}</div>
+		</div>
+	</div><!-- #content -->
+</div><!-- #container -->
 {% endblock %}

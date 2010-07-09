@@ -1,0 +1,27 @@
+{% extends ParentTmpl %}
+{% block content %}
+<div id="container">
+	<div id="content">
+		<div id="post-{article.idP}" class="post hentry category-uncategorized tag-2 tag-green-park tag-greenpark tag-list tag-theme tag-todo tag-todolist tag-two tag-wordpress">
+			<h1>{{article.title}}</h1>
+			<small class="meta">
+				<span class="alignleft">{{article.date}} par {{article.author}}</span>
+				<span class="alignright"><a href="#comments" class="button-style" rel="nofollow">Laisser un commentaire &raquo;</a></span>
+			</small>
+	
+			<div class="entry">
+				{{article.content}}
+				<ul class="previousnext clearfix">
+					{% if pr %}<li class="previous_post"><a href="" rel="prev"><span>Article précédent</span> {{pr.title}}</a></li>{%endif%}
+					{% if nx %}<li class="next_post"><a href="" rel="next"><span>Article suivant</span> {{nx.title}}</a></li>{%endif%}
+				</ul>
+			</div>
+			<div class="postmetadata">
+				<p class="categories">Publié dans la categorie :</p>
+	  			<p class="tags">Tags: </p>
+				<!-- <p class="infos">Infos divers et varié</p> -->
+			</div>
+		</div>
+	</div><!-- #content -->
+</div><!-- #container -->
+{% endblock %}
