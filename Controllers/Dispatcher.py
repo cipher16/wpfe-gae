@@ -35,7 +35,6 @@ class Home(webapp.RequestHandler):
             
 class Dispatcher(webapp.RequestHandler):
     def get(self):
-        path = wpfe.TEMPLATE+"/single.html"
         ar = WPArticles.getArticleByUrl(wpfe.BLOG_URL+self.request.path)
         if not ar:
             self.response.out.write("404")
@@ -55,6 +54,7 @@ class Dispatcher(webapp.RequestHandler):
             'blog_feed':wpfe.BLOG_FEED,
             'single':True,
             'nextArticle':nx,
-            'prevArticle':pr,
+            'prevArticle':pr
         }
+        path = wpfe.TEMPLATE+"/single.html"
         self.response.out.write(template.render(path, template_values))

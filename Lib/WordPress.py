@@ -20,10 +20,10 @@ class WPArticles:
         return articles
     @staticmethod
     def getNextArticles(id,num=1):
-        return db.GqlQuery('SELECT * FROM BlogPost WHERE idP > :1',id).fetch(num)
+        return db.GqlQuery('SELECT * FROM BlogPost WHERE idP > :1 order by idP ASC',id).fetch(num)
     @staticmethod
     def getPrevArticles(id,num=1):
-        return db.GqlQuery('SELECT * FROM BlogPost WHERE idP < :1',id).fetch(num)
+        return db.GqlQuery('SELECT * FROM BlogPost WHERE idP < :1 order by idP DESC',id).fetch(num)
     @staticmethod
     def getArticle(id):
         article = db.GqlQuery('SELECT * FROM BlogPost WHERE idP = :1',id).fetch(1)

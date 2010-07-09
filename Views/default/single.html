@@ -10,10 +10,10 @@
 			</small>
 	
 			<div class="entry">
-				{{article.content}}
+				{{article.content|linebreaksbr}}
 				<ul class="previousnext clearfix">
-					{% if pr %}<li class="previous_post"><a href="" rel="prev"><span>Article précédent</span> {{pr.title}}</a></li>{%endif%}
-					{% if nx %}<li class="next_post"><a href="" rel="next"><span>Article suivant</span> {{nx.title}}</a></li>{%endif%}
+					{% if prevArticle %}<li class="previous_post"><a href="{{prevArticle.link}}" rel="prev"><span>Article précédent</span> {{prevArticle.title}}</a></li>{%endif%}
+					{% if nextArticle %}<li class="next_post"><a href="{{nextArticle.link}}" rel="next"><span>Article suivant</span> {{nextArticle.title}}</a></li>{%endif%}
 				</ul>
 			</div>
 			<div class="postmetadata">
