@@ -101,17 +101,14 @@
 </li>
 {% endif %}
 
-<?php if ( is_front_page() || is_page() ) { ?>
 <li id="about" class="clearfix">
-  <div class="sb-title"><?php echo get_option('greenpark2_sidebar_about_title'); ?></div>
-  <ul>
-  	<li>
-  		<?php echo get_option('greenpark2_sidebar_about_content');?>
-		</li>
+	<div class="sb-title">A propos</div>
+	<ul>
+  		<li>Blog d'un étudiant en informatique</li>
 	</ul>
 </li>
 <?php } ?>
-{% if single %}
+{% if test %}<!-- Je sais pas a quoi ça sert ... -->
 	<li class="currently-viewing">
 		page en cours de visite
 	</li>
