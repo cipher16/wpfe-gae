@@ -17,13 +17,14 @@ TEMPLATE = APPLICATION_PATH+"/Views/default"
 
 application = webapp.WSGIApplication(
     [
-      ('/admin/import',WPImporter),
-      ('/admin/rssUpdate', RssContentUpdater),
-      ('/', Home),
-      ('/page/.*', Home),
-      ('/tag/.*', Home),
-      ('/category/.*', Home),
-      ('/.*', Dispatcher)
+      ('/admin/import',WPImporter),                    #import 90% -> verif commentaire + ajout tag & cat 
+      ('/admin/rssUpdate', RssContentUpdater),         #parsing OK, need DB insertion + cron
+      ('/', Home),           #display several articles OK
+      ('/page/.*', Home),    #display page contents    OK
+      ('/tag/.*', Home),     #archive system
+      ('/category/.*', Home),#archive system
+      ('/feed/.*', Home),    #feed generator
+      ('/.*', Dispatcher)    #display single article   OK
     ],debug=True)
 
 def main():
