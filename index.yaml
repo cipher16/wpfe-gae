@@ -12,5 +12,16 @@ indexes:
 
 - kind: BlogComments
   properties:
+  - name: post
+  - name: date
+
+- kind: BlogComments
+  properties:
   - name: post_id
   - name: date
+
+- kind: BlogPost
+  properties:
+  - name: type
+  - name: date
+    direction: desc

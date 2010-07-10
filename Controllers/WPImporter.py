@@ -57,40 +57,14 @@ class WPImporter(webapp.RequestHandler):
             title = cat.getElementsByTagName('title')[0].childNodes[0].nodeValue
             link = cat.getElementsByTagName('link')[0].childNodes[0].nodeValue
             author = cat.getElementsByTagName('dc:creator')[0].childNodes[0].nodeValue
-                
+            type = cat.getElementsByTagName('wp:post_type')[0].childNodes[0].nodeValue
+            #recuperation des categories et tags
+            tag = []
+            for t in cat.getElementsByTagName('category'):
+                #tag.append(t.childNodes[0].nodeValue)
+                self.response.out.write(t.toxml())
             if status=="publish":
-                
-                #recuperations des commentaires, si il y a lieux
-                if len(cat.getElementsByTagName('wp:comment'))>0:
-                    for com in cat.getElementsByTagName('wp:comment'):
-                        #verification si le commentaire est approuve
-                        if com.getElementsByTagName("wp:comment_approved")[0].childNodes[0].nodeValue=="1":
-                            comAR = ""
-                            comAe = ""
-                            comDa = com.getElementsByTagName("wp:comment_date")[0].childNodes[0].nodeValue
-                            comId = com.getElementsByTagName("wp:comment_id")[0].childNodes[0].nodeValue
-                            comAu = com.getElementsByTagName("wp:comment_author")[0].childNodes[0].wholeText
-                            if len(com.getElementsByTagName("wp:comment_author_email")[0].childNodes)>0:
-                                comAe = com.getElementsByTagName("wp:comment_author_email")[0].childNodes[0].nodeValue
-                            if len(com.getElementsByTagName("wp:comment_author_url")[0].childNodes)>0:
-                                comAR = com.getElementsByTagName("wp:comment_author_url")[0].childNodes[0].nodeValue
-                            comAI = com.getElementsByTagName("wp:comment_author_IP")[0].childNodes[0].nodeValue
-                            comCn = com.getElementsByTagName("wp:comment_content")[0].childNodes[0].wholeText
-                            comPi = id
-                            r = db.GqlQuery('SELECT * FROM BlogComments WHERE idP = :1', int(id)).fetch(1)
-                            if not r:
-                                nCom = BlogComments()
-                                nCom.idP = int(comId)
-                                nCom.date = date.StrToDateTime(comDa)
-                                nCom.author = comAu
-                                nCom.authorIp = comAI
-                                nCom.authorMail = comAe
-                                nCom.authorUrl = comAR
-                                nCom.content = comCn
-                                nCom.post_id = int(comPi)
-                                nCom.put()
-                                self.response.out.write("un nouveau commentaire "+comId+" de : "+comAu+"<br />")
-                
+                                
                 #recuperation du texte et test sur le contenu        
                 cont = ""
                 try:
@@ -107,6 +81,37 @@ class WPImporter(webapp.RequestHandler):
                     n.author = author
                     n.status = status
                     n.link = link
+                    n.type = type
                     n.content = cont
                     n.put()
                     self.response.out.write("[POST] --- l'element : "+title+" n'existe pas<br />")
+                    
+                    #recuperations des commentaires, si le post existe !!
+                    if len(cat.getElementsByTagName('wp:comment'))>0:
+                        for com in cat.getElementsByTagName('wp:comment'):
+                            #verification si le commentaire est approuve
+                            if com.getElementsByTagName("wp:comment_approved")[0].childNodes[0].nodeValue=="1":
+                                comAR = ""
+                                comAe = ""
+                                comDa = com.getElementsByTagName("wp:comment_date")[0].childNodes[0].nodeValue
+                                comId = com.getElementsByTagName("wp:comment_id")[0].childNodes[0].nodeValue
+                                comAu = com.getElementsByTagName("wp:comment_author")[0].childNodes[0].wholeText
+                                if len(com.getElementsByTagName("wp:comment_author_email")[0].childNodes)>0:
+                                    comAe = com.getElementsByTagName("wp:comment_author_email")[0].childNodes[0].nodeValue
+                                if len(com.getElementsByTagName("wp:comment_author_url")[0].childNodes)>0:
+                                    comAR = com.getElementsByTagName("wp:comment_author_url")[0].childNodes[0].nodeValue
+                                comAI = com.getElementsByTagName("wp:comment_author_IP")[0].childNodes[0].nodeValue
+                                comCn = com.getElementsByTagName("wp:comment_content")[0].childNodes[0].wholeText
+                                r = db.GqlQuery('SELECT * FROM BlogComments WHERE idP = :1', int(comId)).fetch(1)
+                                if not r:
+                                    nCom = BlogComments()
+                                    nCom.idP = int(comId)
+                                    nCom.date = date.StrToDateTime(comDa)
+                                    nCom.author = comAu
+                                    nCom.authorIp = comAI
+                                    nCom.authorMail = comAe
+                                    nCom.authorUrl = comAR
+                                    nCom.content = comCn
+                                    nCom.post = n.key()
+                                    nCom.put()
+                                    self.response.out.write("un nouveau commentaire "+comId+" de : "+comAu+"<br />")

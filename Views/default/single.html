@@ -22,6 +22,22 @@
 				<!-- <p class="infos">Infos divers et varié</p> -->
 			</div>
 		</div>
+		<!-- Comments -->
+		<div class="comments-header clearfix"><h3 id="comments">{% ifequal article.comments.count 0%}Pas de commentaire{%else%}{{article.comments.count}} commentaire{{article.comments.count|pluralize}}{%endifequal%}</h3></div>
+		<ol class="commentlist">
+			{%for com in article.coms %}
+				<li class="comment even thread-even depth-1">
+					<div class="comment-body">
+						<div class="comment-author vcard">
+							<cite class="fn">{{com.author}}</cite> <span class="says">dit :</span>
+						</div>
+						<div class="comment-meta commentmetadata">{{com.date}}</div>
+						<p>{{com.content|linebreaks}}</p>
+						<div class="reply"></div>
+					</div>
+				</li>
+			{%endfor%}
+		</ol>
 	</div><!-- #content -->
 </div><!-- #container -->
 {% endblock %}

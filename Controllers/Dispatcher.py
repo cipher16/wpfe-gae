@@ -18,7 +18,7 @@ class Home(webapp.RequestHandler):
             else:
                 page=int(page[2])
             
-        ar = WPArticles.getArticles(10,page*10)
+        ar = WPArticles.getArticles(wpfe.NB_ARTICLE_HOME,page*wpfe.NB_ARTICLE_HOME)
         template_values = {
            'articles': ar,
            'ParentTmpl': wpfe.TEMPLATE+"/index.html",
@@ -35,7 +35,7 @@ class Home(webapp.RequestHandler):
             
 class Dispatcher(webapp.RequestHandler):
     def get(self):
-        ar = WPArticles.getArticleByUrl(wpfe.BLOG_URL+self.request.path)
+        ar = WPArticles.getArticleByUrl(wpfe.BLOG_URL+self.request.path)        
         if not ar:
             self.response.out.write("404")
             return

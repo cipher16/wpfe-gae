@@ -6,15 +6,17 @@
 			<div id="post-{{ article.idP }}" class="post hentry category-uncategorized tag-2 tag-green-park tag-greenpark tag-list tag-theme tag-todo tag-todolist tag-two tag-wordpress">
 				<h2><a href="{{ article.link }}" rel="bookmark" title="{{ article.title }}">{{ article.title }}</a></h2>
 				<small class="meta">
-					<span class="alignleft">{{ article.date }} par {{ article.author }}</span>
-					<span class="alignright"><a href="{{article.link}}#comments" class="button-style" rel="nofollow">{{article.comments|length}} commentaire{{article.comments|pluralize}} &#187;</a></span>
+					<span class="alignleft">{{ article.date|date:"D d M Y" }} par {{ article.author }}</span>
+					<span class="alignright"><a href="{{article.link}}#comments" class="button-style" rel="nofollow"> {% ifequal article.comments.count 0%}Pas de commentaire{%else%} {{article.comments.count}} commentaire{{article.comments.count|pluralize}}{%endifequal%} &#187;</a></span>
         		</small>
 				<div class="entry">
-					{{article.resume|linebreaksbr}}
+				{% spaceless %}
+					{{article.resume}}
+				{% endspaceless %}
 				</div>
 				<div class="postmetadata clearfix">
 		          <p class="commentslink alignright">
-		            <a href="{{article.link}}#comments" rel="nofollow"> {{article.comments|length}} commentaire{{article.comments|pluralize}} &#187;</a>  
+		            <a href="{{article.link}}#comments" rel="nofollow"> {% ifequal article.comments.count 0%}Pas de commentaire{%else%} {{article.comments.count}} commentaire{{article.comments.count|pluralize}}{%endifequal%} &#187;</a>  
 		          </p>
 				  <p class="categories">
 					Publié dans la catégorie : une cat 

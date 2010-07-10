@@ -870,3 +870,9 @@ a.dsq-brlink {
   #content .entry p a:after { content: "  [" attr(href) "] "; }
   #accessibility, hr, #nav, #sidebar, .something { display: none; }
 }
+
+pre {
+	overflow:auto;
+	border-style: dashed;
+	border-width: thin;
+}

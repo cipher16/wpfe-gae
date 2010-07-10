@@ -12,10 +12,10 @@ def readMore(content,url,title):
 class WPArticles:
     @staticmethod
     def getArticles(num=10, start=0):
-        articles = db.GqlQuery('SELECT * FROM BlogPost order by date DESC').fetch(num,start)
+        articles = db.GqlQuery('SELECT * FROM BlogPost WHERE type=:1 order by date DESC',"post").fetch(num,start)
         for ar in articles:
             ar.link=rewUrl(ar.link)
-            ar.comments=WPComments.getComments(ar.idP)
+            #ar.comments=WPComments.getComments(ar.idP)S
             ar.resume=readMore(ar.content,ar.link,ar.title)
         return articles
     @staticmethod
@@ -34,11 +34,12 @@ class WPArticles:
         if len(article)==0:
             return None
         article = article[0]
-        article.comments = WPComments.getComments(article.idP)
+        #article.comments = WPComments.getComments(article.idP)
+        article.coms=article.comments.order('date')
         article.link=rewUrl(article.link)
         return article
     
-    
+#useless due to the use of referenceProperty
 class WPComments:
     @staticmethod
     def getComments(postId,num=100):

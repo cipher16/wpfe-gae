@@ -7,7 +7,10 @@ class BlogPost(db.Model):
     author= db.StringProperty()
     status= db.StringProperty()
     link  = db.StringProperty()
+    type  = db.StringProperty()
     content=db.TextProperty()
+    tags = db.StringListProperty()
+    cats = db.StringListProperty()
 
 class BlogComments(db.Model):
     idP = db.IntegerProperty()
@@ -17,7 +20,7 @@ class BlogComments(db.Model):
     authorIp = db.StringProperty()
     date = db.DateTimeProperty()
     content = db.TextProperty()
-    post_id = db.IntegerProperty()#BlogPostId
+    post = db.ReferenceProperty(BlogPost,collection_name="comments")#BlogPost
 
 class BlogCategory(db.Model):
     niceName = db.StringProperty()
