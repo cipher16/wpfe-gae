@@ -18,10 +18,8 @@
 		          <p class="commentslink alignright">
 		            <a href="{{article.link}}#comments" rel="nofollow"> {% ifequal article.comments.count 0%}Pas de commentaire{%else%} {{article.comments.count}} commentaire{{article.comments.count|pluralize}}{%endifequal%} &#187;</a>  
 		          </p>
-				  <p class="categories">
-					Publié dans la catégorie : une cat 
-		          </p>
-				  <p class="tags">Tags: les tags</p>
+					<p class="categories">Publié dans la categorie : {{article.category}}</p>
+		  			<p class="tags">Tags: {{article.tagsURL}}</p>
 		        </div>
 			</div>
 		{% endfor %}

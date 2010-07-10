@@ -17,6 +17,8 @@ class WPArticles:
             ar.link=rewUrl(ar.link)
             #ar.comments=WPComments.getComments(ar.idP)S
             ar.resume=readMore(ar.content,ar.link,ar.title)
+            ar.category=WPCategory.genUrl(ar.cats)
+            ar.tagsURL=WPTags.genUrl(ar.tags)
         return articles
     @staticmethod
     def getNextArticles(id,num=1):
