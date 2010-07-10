@@ -29,3 +29,8 @@ class BlogCategory(db.Model):
 class BlogTag(db.Model):
     slug = db.StringProperty()
     name = db.StringProperty()
+    
+class BlogUpload(db.Model):
+    date = db.DateTimeProperty(auto_now_add=True)
+    num  = db.IntegerProperty()
+    content = db.BlobProperty()

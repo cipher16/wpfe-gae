@@ -1,4 +1,4 @@
-application: wpfe
+application: wpfe-loupzeur
 version: 1
 runtime: python
 api_version: 1

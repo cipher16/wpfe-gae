@@ -5,16 +5,67 @@ from google.appengine.ext import db
 from Models.WordPress import *
 from Lib.DateTime import date
 
-class WPImporter(webapp.RequestHandler):
+class WPUploader(webapp.RequestHandler):
     def get(self):
-        self.response.out.write("Upload de fichiers<form method='post' enctype=\"multipart/form-data\" action=\"/admin/import\"><input type=\"file\" name=\"myfile\" /><input type=\"submit\" /></form>")
+        self.response.out.write("Upload de fichiers<form method='post' enctype=\"multipart/form-data\" action=\"/admin/upload\"><input type=\"file\" name=\"myfile\" /><input type=\"submit\" /></form>")
+
     def post(self):
-        #as the file is may be to big to be stored, we start processing :s
         file_contents = self.request.get('myfile')
         if len(file_contents)==0:
-            self.redirect("/")
+            self.redirect("/admin/upload")
             return
-        dom = parseString(file_contents)
+        start = 0
+        end   = 1024 * 1000 #1 Mo
+        Filen = len(file_contents)
+        if Filen<end:
+            self.response.out.write("le fichier fait moins de 1Mo on stock direct")
+            upload = BlogUpload()
+            upload.content = file_contents
+            upload.num = Filen
+            upload.put()
+        else:
+            nextBreak=False
+            while True:
+                oneMoContent = file_contents[start:end]
+                upload = BlogUpload()
+                upload.content = oneMoContent
+                upload.num = Filen
+                upload.put()
+                start = end+1
+                end *=2
+                self.response.out.write("une boucle ...<br />");
+                if nextBreak:
+                    break
+                if end>Filen:
+                    end=Filen
+                    nextBreak=True
+            self.response.out.write("le fichier fait plus de 1 Mo, on explode en partie de 1Mo")
+        #    self.redirect("/admin/import")#send to import part once we have stored data
+        #    return
+        #while(True):
+        #    cutFile = file_contents[start:end]
+        
+
+class WPImporter(webapp.RequestHandler):
+    def get(self):
+        self.response.out.write("Choose your last upload to import in DB :<br />")
+        lastNum = 0
+        for i in db.GqlQuery("SELECT * FROM BlogUpload").fetch(100):
+            if lastNum != i.num:
+                lastNum=i.num
+                self.response.out.write("<form method='post'><input name='lastImport' type='hidden' value='"+str(i.num)+"' />Upload du : "+str(i.date)+" ("+str(i.num)+" octets)<input type='submit' /></form>")
+                
+    def post(self):
+        #as the file is may be to big to be stored, we start processing :s
+        file_contents = ""
+        dataToChoose = self.request.get('lastImport')
+        data = db.GqlQuery("SELECT * FROM BlogUpload WHERE num = :1",int(dataToChoose)).fetch(100)
+        for d in data:
+            file_contents+=d.content
+        if len(file_contents)==0:
+            self.redirect("/admin/import")
+            return
+        dom = parseString(file_contents.decode('utf-8','ignore').encode('utf-8',"replace"))
         
         title = dom.getElementsByTagName('channel')[0].getElementsByTagName('title')[0].childNodes[0].nodeValue
         link  = dom.getElementsByTagName('channel')[0].getElementsByTagName('link')[0].childNodes[0].nodeValue
@@ -63,14 +114,12 @@ class WPImporter(webapp.RequestHandler):
             cats = []
             for t in cat.getElementsByTagName('category'):
                 if "domain" in t.attributes.keys() and t.attributes["domain"].value=="tag":
-                    self.response.out.write("New tag "+t.childNodes[0].wholeText+"<br />")
                     if not t.childNodes[0].wholeText in tags:
                         tags.append(t.childNodes[0].wholeText)
                 else:
                     #tag.append(t.childNodes[0].nodeValue)
                     if not t.childNodes[0].wholeText in cats:
                         cats.append(t.childNodes[0].wholeText)
-                    self.response.out.write("New cat "+t.childNodes[0].wholeText+"<br />")
             if status=="publish":
                                 
                 #recuperation du texte et test sur le contenu        
