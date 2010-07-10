@@ -4,6 +4,10 @@ runtime: python
 api_version: 1
 
 handlers:
+- url: /robots.txt
+  static_files: robots.txt
+  upload: robots.txt
+
 - url: /style.css
   static_files: Views/default/style.css
   upload: Views/default/style.css
