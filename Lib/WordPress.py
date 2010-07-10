@@ -44,3 +44,31 @@ class WPComments:
     @staticmethod
     def getComments(postId,num=100):
         return db.GqlQuery('SELECT * FROM BlogComments WHERE post_id = :1 order by date ASC',postId).fetch(num)
+    
+class WPCategory:
+    @staticmethod
+    def getNiceName(cat):
+        cat = db.GqlQuery('SELECT * FROM BlogCategory WHERE catName = :1',cat).fetch(1)
+        if not cat:
+            return None
+        return cat[0].niceName    
+    @staticmethod
+    def genUrl(cats):
+        url = []
+        for cat in cats:
+            url.append("<a href='/category/"+WPCategory.getNiceName(cat)+"'>"+cat+"</a>")
+        return ",".join(url)
+
+class WPTags:
+    @staticmethod
+    def getNiceName(tag):
+        tag = db.GqlQuery('SELECT * FROM BlogTag WHERE name = :1',tag).fetch(1)
+        if not tag:
+            return None
+        return tag[0].slug
+    @staticmethod
+    def genUrl(tags):
+        url = []
+        for tag in tags:
+            url.append("<a href='/tag/"+WPTags.getNiceName(tag)+"'>"+tag+"</a>")
+        return ",".join(url)

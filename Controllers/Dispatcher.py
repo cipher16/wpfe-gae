@@ -1,5 +1,5 @@
 from google.appengine.ext import webapp
-from Lib.WordPress import WPArticles
+from Lib.WordPress import *
 from google.appengine.ext.webapp import template
 import wpfe
 
@@ -45,7 +45,9 @@ class Dispatcher(webapp.RequestHandler):
             pr=pr[0]
         if len(nx)>0:
             nx=nx[0]
-            
+        ar.category=WPCategory.genUrl(ar.cats)
+        ar.tagsURL=WPTags.genUrl(ar.tags)
+        
         template_values = {
             'article': ar,
             'ParentTmpl': wpfe.TEMPLATE+"/index.html",

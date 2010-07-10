@@ -59,10 +59,18 @@ class WPImporter(webapp.RequestHandler):
             author = cat.getElementsByTagName('dc:creator')[0].childNodes[0].nodeValue
             type = cat.getElementsByTagName('wp:post_type')[0].childNodes[0].nodeValue
             #recuperation des categories et tags
-            tag = []
+            tags = []
+            cats = []
             for t in cat.getElementsByTagName('category'):
-                #tag.append(t.childNodes[0].nodeValue)
-                self.response.out.write(t.toxml())
+                if "domain" in t.attributes.keys() and t.attributes["domain"].value=="tag":
+                    self.response.out.write("New tag "+t.childNodes[0].wholeText+"<br />")
+                    if not t.childNodes[0].wholeText in tags:
+                        tags.append(t.childNodes[0].wholeText)
+                else:
+                    #tag.append(t.childNodes[0].nodeValue)
+                    if not t.childNodes[0].wholeText in cats:
+                        cats.append(t.childNodes[0].wholeText)
+                    self.response.out.write("New cat "+t.childNodes[0].wholeText+"<br />")
             if status=="publish":
                                 
                 #recuperation du texte et test sur le contenu        
@@ -83,6 +91,8 @@ class WPImporter(webapp.RequestHandler):
                     n.link = link
                     n.type = type
                     n.content = cont
+                    n.tags = tags
+                    n.cats = cats
                     n.put()
                     self.response.out.write("[POST] --- l'element : "+title+" n'existe pas<br />")
                     
