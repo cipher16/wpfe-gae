@@ -15,7 +15,7 @@ class WPUploader(webapp.RequestHandler):
             self.redirect("/admin/upload")
             return
         start = 0
-        end   = 1024 * 1000 #1 Mo
+        end   = 1000000 #Google's characters limitation
         Filen = len(file_contents)
         if Filen<end:
             self.response.out.write("le fichier fait moins de 1Mo on stock direct")
@@ -31,7 +31,7 @@ class WPUploader(webapp.RequestHandler):
                 upload.content = oneMoContent
                 upload.num = Filen
                 upload.put()
-                start = end+1
+                start = end
                 end *=2
                 self.response.out.write("une boucle ...<br />");
                 if nextBreak:
@@ -65,7 +65,7 @@ class WPImporter(webapp.RequestHandler):
         if len(file_contents)==0:
             self.redirect("/admin/import")
             return
-        dom = parseString(file_contents.decode('utf-8','ignore').encode('utf-8',"replace"))
+        dom = parseString(file_contents.decode('utf-8','replace').encode('utf-8',"replace"))
         
         title = dom.getElementsByTagName('channel')[0].getElementsByTagName('title')[0].childNodes[0].nodeValue
         link  = dom.getElementsByTagName('channel')[0].getElementsByTagName('link')[0].childNodes[0].nodeValue

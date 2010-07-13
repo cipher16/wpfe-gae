@@ -20,12 +20,12 @@ application = webapp.WSGIApplication(
       ('/admin/upload',WPUploader),                    #import 0%
       ('/admin/import',WPImporter),                    #import 100% 
       ('/admin/rssUpdate', RssContentUpdater),         #50% parsing OK, need DB insertion + cron
-      ('/', Home),           #display several articles OK 100%
-      ('/page/.*', Home),    #display page contents    OK 100%
-      ('/tag/.*', Home),     #archive system                0%
-      ('/category/.*', Home),#archive system                0%
-      ('/feed/.*', Home),    #feed generator                0%
-      ('/.*', Dispatcher)    #display single article   OK 100%
+      ('/', Home),                  #display several articles OK 100%
+      ('/page/.*', Home),           #display page contents    OK 100%
+      ('/tag/.*', TagsAndCats),     #archive system                0%
+      ('/category/.*', TagsAndCats),#archive system                0%
+      ('/feed/.*', Home),           #feed generator                0%
+      ('/.*', Dispatcher)           #display single article   OK 100%
     ],debug=True)
 
 def main():

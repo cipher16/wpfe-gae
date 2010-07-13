@@ -24,7 +24,7 @@
 			</div>
 		{% endfor %}
 		<div class="pagination navigation clearfix">
-  		  <div class="alignleft"><a href="/page/{{nxtPage}}">Articles plus vieux</a></div>
+  		  <div class="alignleft">{% ifequal nbArticles 10 %}<a href="/page/{{nxtPage}}">Articles plus vieux</a>{% endifequal %}</div>
 	      <div class="alignright">{% ifnotequal page 0 %}<a href="/page/{{prvPage}}">Articles plus récent</a>{% endifnotequal %}</div>
 		</div>
 	</div><!-- #content -->

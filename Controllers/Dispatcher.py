@@ -28,7 +28,8 @@ class Home(webapp.RequestHandler):
            'blog_feed':wpfe.BLOG_FEED,
            'page':page,
            'nxtPage': (int(page)+1),
-           'prvPage': (int(page)-1)
+           'prvPage': (int(page)-1),
+           'nbArticles':len(ar)
         }
         path = wpfe.TEMPLATE+"/home.html"
         self.response.out.write(template.render(path, template_values))
@@ -59,4 +60,28 @@ class Dispatcher(webapp.RequestHandler):
             'prevArticle':pr
         }
         path = wpfe.TEMPLATE+"/single.html"
+        self.response.out.write(template.render(path, template_values))
+        
+class TagsAndCats(webapp.RequestHandler):
+    def get(self):
+        info = self.request.path.split("/")
+        if not info:
+            return
+        if info[1]=="tag":
+            ar = WPArticles.getArticlesByTag(info[2])
+        else:
+            ar = WPArticles.getArticlesByCat(info[2])
+        template_values = {
+           'articles': ar,
+           'ParentTmpl': wpfe.TEMPLATE+"/index.html",
+           'home':True,
+           'blog_name':wpfe.BLOG_NAME,
+           'blog_descr':wpfe.BLOG_DESCR,
+           'blog_feed':wpfe.BLOG_FEED,
+           'page':0,
+           'nxtPage': (int(0)+1),
+           'prvPage': (int(0)-1),
+           'nbArticles':len(ar)
+        }
+        path = wpfe.TEMPLATE+"/home.html"
         self.response.out.write(template.render(path, template_values))

@@ -40,6 +40,27 @@ class WPArticles:
         article.coms=article.comments.order('date')
         article.link=rewUrl(article.link)
         return article
+    @staticmethod
+    def getArticlesByTag(tag,num=10,start=0):
+        articles = db.GqlQuery('SELECT * FROM BlogPost WHERE tags = :1 AND type=:2 order by date DESC',tag,"post").fetch(num,start)
+        for ar in articles:
+            ar.link=rewUrl(ar.link)
+            #ar.comments=WPComments.getComments(ar.idP)S
+            ar.resume=readMore(ar.content,ar.link,ar.title)
+            ar.category=WPCategory.genUrl(ar.cats)
+            ar.tagsURL=WPTags.genUrl(ar.tags)
+        return articles
+    @staticmethod
+    def getArticlesByCat(cat,num=10,start=0):
+        articles = db.GqlQuery('SELECT * FROM BlogPost WHERE cats = :1 AND type=:2 order by date DESC',cat,"post").fetch(num,start)
+        for ar in articles:
+            ar.link=rewUrl(ar.link)
+            #ar.comments=WPComments.getComments(ar.idP)S
+            ar.resume=readMore(ar.content,ar.link,ar.title)
+            ar.category=WPCategory.genUrl(ar.cats)
+            ar.tagsURL=WPTags.genUrl(ar.tags)
+        return articles
+    
     
 #useless due to the use of referenceProperty
 class WPComments:

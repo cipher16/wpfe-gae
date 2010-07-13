@@ -22,6 +22,20 @@ indexes:
 
 - kind: BlogPost
   properties:
+  - name: cats
+  - name: type
+  - name: date
+    direction: desc
+
+- kind: BlogPost
+  properties:
+  - name: tags
+  - name: type
+  - name: date
+    direction: desc
+
+- kind: BlogPost
+  properties:
   - name: type
   - name: date
     direction: desc
