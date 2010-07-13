@@ -17,8 +17,6 @@
 <link rel="pingback" href="pingbackUrl" />
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
-
-<?php if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
 </head>
 
 <body id="home">
@@ -65,30 +63,28 @@
 	{% block content %}{% endblock %}
 <div id="sidebar">
 	<ul class="sb-list clearfix">
-<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar(1) ) : ?>
-
-<li>
-	<ul class="sb-tools clearfix">
-		<li class="twitter-icon">
-    	<a class="sb-icon" href="http://twitter.com/loupzeur" rel="nofollow">
-    		<span>Dernier tweet</span>	
-    		Les kikoolols attaquent
-      </a>
-    	<p class="sb-icon-text">
-        <a href="http://twitter.com/loupzeur" rel="nofollow">Follow Me</a>.
-      </p>
+		<li>
+			<ul class="sb-tools clearfix">
+				<li class="twitter-icon">
+		    	<a class="sb-icon" href="http://twitter.com/loupzeur" rel="nofollow">
+		    		<span>Dernier tweet</span>	
+		    		Les kikoolols attaquent
+		      </a>
+		    	<p class="sb-icon-text">
+		        <a href="http://twitter.com/loupzeur" rel="nofollow">Follow Me</a>.
+		      </p>
+				</li>
+			</ul>
 		</li>
-	</ul>
-</li>
-<li>
-	<ul class="sb-tools clearfix">
-		<li class="rss-icon">
-			<a class="sb-icon" href="{{blog_feed}}" title="le fil RSS">
-				<span>Abonnez-vous</span>Suivez le fil
-			</a>
+		<li>
+			<ul class="sb-tools clearfix">
+				<li class="rss-icon">
+					<a class="sb-icon" href="{{blog_feed}}" title="le fil RSS">
+						<span>Abonnez-vous</span>Suivez le fil
+					</a>
+				</li>
+			</ul>
 		</li>
-	</ul>
-</li>
 
 
 <!-- Si un seul article -->
@@ -107,7 +103,6 @@
   		<li>Blog d'un étudiant en informatique</li>
 	</ul>
 </li>
-<?php } ?>
 {% if test %}<!-- Je sais pas a quoi ça sert ... -->
 	<li class="currently-viewing">
 		page en cours de visite

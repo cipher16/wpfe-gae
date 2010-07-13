@@ -70,28 +70,28 @@ class WPComments:
     
 class WPCategory:
     @staticmethod
-    def getNiceName(cat):
-        cat = db.GqlQuery('SELECT * FROM BlogCategory WHERE catName = :1',cat).fetch(1)
+    def getName(cat):
+        cat = db.GqlQuery('SELECT * FROM BlogCategory WHERE niceName = :1',cat).fetch(1)
         if not cat:
             return None
-        return cat[0].niceName    
+        return cat[0].catName    
     @staticmethod
     def genUrl(cats):
         url = []
         for cat in cats:
-            url.append("<a href='/category/"+WPCategory.getNiceName(cat)+"'>"+cat+"</a>")
+            url.append("<a href='/category/"+cat+"'>"+WPCategory.getName(cat)+"</a>")
         return ",".join(url)
 
 class WPTags:
     @staticmethod
-    def getNiceName(tag):
-        tag = db.GqlQuery('SELECT * FROM BlogTag WHERE name = :1',tag).fetch(1)
+    def getName(tag):
+        tag = db.GqlQuery('SELECT * FROM BlogTag WHERE slug = :1',tag).fetch(1)
         if not tag:
             return None
-        return tag[0].slug
+        return tag[0].name
     @staticmethod
     def genUrl(tags):
         url = []
         for tag in tags:
-            url.append("<a href='/tag/"+WPTags.getNiceName(tag)+"'>"+tag+"</a>")
+            url.append("<a href='/tag/"+tag+"'>"+WPTags.getName(tag)+"</a>")
         return ",".join(url)

@@ -10,7 +10,7 @@ import wpfe
 
 class Home(webapp.RequestHandler):
     def get(self):
-        page=0
+        page=1
         if self.request.path.startswith("/page/"):
             page=self.request.path.split("/")
             if len(page)<3:
@@ -18,7 +18,7 @@ class Home(webapp.RequestHandler):
             else:
                 page=int(page[2])
             
-        ar = WPArticles.getArticles(wpfe.NB_ARTICLE_HOME,page*wpfe.NB_ARTICLE_HOME)
+        ar = WPArticles.getArticles(wpfe.NB_ARTICLE_HOME,(page-1)*wpfe.NB_ARTICLE_HOME)
         template_values = {
            'articles': ar,
            'ParentTmpl': wpfe.TEMPLATE+"/index.html",
@@ -64,24 +64,29 @@ class Dispatcher(webapp.RequestHandler):
         
 class TagsAndCats(webapp.RequestHandler):
     def get(self):
+        page=1
         info = self.request.path.split("/")
-        if not info:
-            return
+        if len(info)==5:
+            page=int(info[4])
         if info[1]=="tag":
-            ar = WPArticles.getArticlesByTag(info[2])
-        else:
-            ar = WPArticles.getArticlesByCat(info[2])
+            ar = WPArticles.getArticlesByTag(info[2],wpfe.NB_ARTICLE_HOME,(page-1)*wpfe.NB_ARTICLE_HOME)
+        elif info[1]=="category":
+            ar = WPArticles.getArticlesByCat(info[2],wpfe.NB_ARTICLE_HOME,(page-1)*wpfe.NB_ARTICLE_HOME)
+        if len(ar)==0:
+            return 404
         template_values = {
            'articles': ar,
            'ParentTmpl': wpfe.TEMPLATE+"/index.html",
+           'archive':True,
            'home':True,
            'blog_name':wpfe.BLOG_NAME,
            'blog_descr':wpfe.BLOG_DESCR,
            'blog_feed':wpfe.BLOG_FEED,
-           'page':0,
-           'nxtPage': (int(0)+1),
-           'prvPage': (int(0)-1),
-           'nbArticles':len(ar)
+           'page':page,
+           'nxtPage': (int(page)+1),
+           'prvPage': (int(page)-1),
+           'nbArticles':len(ar),
+           'urlArchive':"/"+info[1]+"/"+info[2]
         }
         path = wpfe.TEMPLATE+"/home.html"
         self.response.out.write(template.render(path, template_values))

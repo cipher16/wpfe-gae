@@ -113,13 +113,13 @@ class WPImporter(webapp.RequestHandler):
             tags = []
             cats = []
             for t in cat.getElementsByTagName('category'):
-                if "domain" in t.attributes.keys() and t.attributes["domain"].value=="tag":
-                    if not t.childNodes[0].wholeText in tags:
-                        tags.append(t.childNodes[0].wholeText)
-                else:
+                if "domain" in t.attributes.keys() and t.attributes["domain"].value=="tag" and "nicename" in t.attributes.keys() :
+                    if not t.attributes["nicename"].value in tags:
+                        tags.append(t.attributes["nicename"].value)
+                elif "nicename" in t.attributes.keys():
                     #tag.append(t.childNodes[0].nodeValue)
-                    if not t.childNodes[0].wholeText in cats:
-                        cats.append(t.childNodes[0].wholeText)
+                    if not t.attributes["nicename"].value in cats:
+                        cats.append(t.attributes["nicename"].value)
             if status=="publish":
                                 
                 #recuperation du texte et test sur le contenu        
