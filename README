@@ -13,7 +13,7 @@ Wordpress FrontEnd
 	display home 100%
 	display archive 100% (tag & category)
 	comments using webservices 0%
-	CACHE system 0%
+	CACHE system 90% (archive, single, home)
 	CRON task to import datas 0%
 	I18N ?? 0%
 	feed 0%

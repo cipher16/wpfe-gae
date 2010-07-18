@@ -2,6 +2,7 @@ from google.appengine.ext import webapp
 from Lib.WordPress import *
 from google.appengine.ext.webapp import template
 import wpfe
+from google.appengine.api import memcache
 
 #type : 
 #    home (display 10)
@@ -10,6 +11,11 @@ import wpfe
 
 class Home(webapp.RequestHandler):
     def get(self):
+        data = memcache.get(wpfe.BLOG_URL+self.request.path)
+        if data is not None:
+            self.response.out.write(data)
+            return 
+        
         page=1
         if self.request.path.startswith("/page/"):
             page=self.request.path.split("/")
@@ -32,10 +38,20 @@ class Home(webapp.RequestHandler):
            'nbArticles':len(ar)
         }
         path = wpfe.TEMPLATE+"/home.html"
-        self.response.out.write(template.render(path, template_values))
+#saving memcache
+        render = template.render(path, template_values)
+        memcache.add(wpfe.BLOG_URL+self.request.path,render)
+        self.response.out.write(render)
             
 class Dispatcher(webapp.RequestHandler):
     def get(self):
+        #memcache system
+        data = memcache.get(wpfe.BLOG_URL+self.request.path)
+        if data is not None:
+            self.response.out.write(data)
+            return 
+        
+        #retrieving data
         ar = WPArticles.getArticleByUrl(wpfe.BLOG_URL+self.request.path)        
         if not ar:
             self.response.out.write("404")
@@ -60,10 +76,17 @@ class Dispatcher(webapp.RequestHandler):
             'prevArticle':pr
         }
         path = wpfe.TEMPLATE+"/single.html"
-        self.response.out.write(template.render(path, template_values))
+#saving memcache
+        render = template.render(path, template_values)
+        memcache.add(wpfe.BLOG_URL+self.request.path,render)
+        self.response.out.write(render)
         
 class TagsAndCats(webapp.RequestHandler):
     def get(self):
+        data = memcache.get(wpfe.BLOG_URL+self.request.path)
+        if data is not None:
+            self.response.out.write(data)
+            return 
         page=1
         info = self.request.path.split("/")
         if len(info)==5:
@@ -89,4 +112,7 @@ class TagsAndCats(webapp.RequestHandler):
            'urlArchive':"/"+info[1]+"/"+info[2]
         }
         path = wpfe.TEMPLATE+"/home.html"
-        self.response.out.write(template.render(path, template_values))
+#saving memcache
+        render = template.render(path, template_values)
+        memcache.add(wpfe.BLOG_URL+self.request.path,render)
+        self.response.out.write(render)
