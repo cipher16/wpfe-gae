@@ -3,6 +3,7 @@
 <div id="container">
 	<div id="content">
 	{%if archive%}<h1>Archive</h1>{%endif%}
+	{%if articles %}
 		{% for article in articles %}
 			<div id="post-{{ article.idP }}" class="post hentry category-uncategorized tag-2 tag-green-park tag-greenpark tag-list tag-theme tag-todo tag-todolist tag-two tag-wordpress">
 				<h2><a href="{{ article.link }}" rel="bookmark" title="{{ article.title }}">{{ article.title }}</a></h2>
@@ -24,6 +25,14 @@
 		        </div>
 			</div>
 		{% endfor %}
+		{%else%}
+
+			<div  class="post hentry category-uncategorized tag-2 tag-green-park tag-greenpark tag-list tag-theme tag-todo tag-todolist tag-two tag-wordpress">
+				<h2><a href="{{ article.link }}" rel="bookmark" title="{{ article.title }}">Aucun article trouvé</a></h2>
+				<div class="entry">Aucun article n'a été trouvé dans la base de données, pour importer vos article, uploadez un export de votre blog wordpress au format XML (par défaut), en accédant à la partie <a href="/admin/">administration</a>.</div>
+			</div>
+
+		{%endif%}
 		<div class="pagination navigation clearfix">
   		  <div class="alignleft">{% ifequal nbArticles 10 %}<a href="{% if archive %}{{urlArchive}}{%endif%}/page/{{nxtPage}}">Articles plus vieux</a>{% endifequal %}</div>
 	      <div class="alignright">{% ifnotequal page 1 %}<a href="{% if archive %}{{urlArchive}}{%endif%}/{% ifnotequal prvPage 1 %}page/{{prvPage}}{%endifnotequal%}">Articles plus récent</a>{% endifnotequal %}</div>

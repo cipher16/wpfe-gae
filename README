@@ -1,0 +1,24 @@
+HOWTO:
+
+Modifiez wpfe.py et modifiez l'url du blog, le nom et ... 
+Modifiez app.yaml pour y mettre l'identifiant de votre application
+Puis uploadez le site sur les google APPENGINE
+Uploadez l'export XML de votre blog sur le site et c'est normalement bon
+
+
+TODO:
+
+Wordpress FrontEnd
+	display article 100% + comments
+	display home 100%
+	display archive 100% (tag & category)
+	comments using webservices 0%
+	CACHE system 0%
+	CRON task to import datas 0%
+	I18N ?? 0%
+	feed 0%
+
+ADMINISTRATION PAGES
+	import 50%
+	upload 50%
+	clean data 0%
