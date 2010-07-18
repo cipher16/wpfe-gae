@@ -3,20 +3,53 @@ ul.menuHaut li {
 	display:inline;
 }
 
+ul.menuHaut {
+	margin: 25 15 15 25;
+	
+	padding: 0px;	
+}
+
+.title {
+	padding: 0px;
+	margin: 15 ;	
+}
+
 .menu {
-	height:30px;
-	background-color: #001100;
+	background-color: #000000;
+	padding: 0px;
+	margin:1px;
 }
 
 li.menuHaut {
-	
+	padding: 1px;
+	margin:0 px;
 }
 
 .body {
 	width:90%;
+	height:98%;
+	border-color: #000;
+	border-width: 1px;
+	border-style: solid;
 	margin: 0 auto;
+	background-color: #FFF;
 }
 
 a {
 	color: red;
+}
+
+body {
+	background-color: #999;
+}
+
+.content {
+	margin-left: 15px;
+	padding: 5px;
+}
+
+.content h1 {
+	background-color: #000;
+	color: #FFF;
+	padding-left: 45px;
 }

@@ -5,6 +5,7 @@ import wpfe
 from google.appengine.ext import db
 from Models.WordPress import *
 from Lib.DateTime import date
+from google.appengine.api.labs.taskqueue import taskqueue
 
 class WPAdmin(webapp.RequestHandler):
     def get(self):
@@ -61,6 +62,8 @@ class WPImporter(webapp.RequestHandler):
             d = db.GqlQuery("SELECT * FROM BlogUpload WHERE num=:1",int(self.request.get('num'))).fetch(100)
             db.delete(d)
             suppression=True
+        if self.request.get('startTask'):
+            taskqueue.add(url='/admin/import',params={'lastImport': self.request.get('num')})
         if self.request.get('displayContent'):
             for d in db.GqlQuery("SELECT * FROM BlogUpload WHERE num=:1",int(self.request.get('num'))).fetch(100):
                 contenu+=d.content

@@ -18,10 +18,12 @@ TEMPADMI = APPLICATION_PATH+"/Views/admin"
 
 application = webapp.WSGIApplication(
     [
+     #administration part
       ('/admin/upload',WPUploader),                    #import 100%
       ('/admin/import',WPImporter),                    #import 100% 
       ('/admin/rssUpdate', RssContentUpdater),         #50% parsing OK, need DB insertion + cron
       ('/admin/',WPAdmin),                    #import 100% 
+     #blog part
       ('/', Home),                  #display several articles OK 100%
       ('/page/.*', Home),           #display page contents    OK 100%
       ('/tag/.*', TagsAndCats),     #archive system                0%

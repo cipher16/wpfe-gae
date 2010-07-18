@@ -4,12 +4,10 @@
 		<h1>Import de contenu</h1>
 		<h2>Choisissez l'upload à utiliser :</h2> 
 		{% for up in upload %}
-			<form method='post'>
 				<a href='/admin/import?deleteContent=true&num={{up.num}}'>[SUPPRESSION]</a>
 				<input name='lastImport' type='hidden' value='{{up.num}}' />
 				Upload du : <a href='/admin/import?displayContent=true&num={{up.num}}'>{{up.date}}</a> ({{up.num}} octets)
-				<input type='submit' />
-			</form>
+				<a href="/admin/import?startTask=true&num={{up.num}}">Mettre en queue l'import de cet upload</a>
 		{% endfor %}
 	{%endif%}
 	{%ifnotequal xmlContent "" %}
