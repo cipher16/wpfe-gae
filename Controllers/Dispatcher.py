@@ -40,7 +40,8 @@ class Home(webapp.RequestHandler):
         path = wpfe.TEMPLATE+"/home.html"
 #saving memcache
         render = template.render(path, template_values)
-        memcache.add(wpfe.BLOG_URL+self.request.path,render)
+        if len(ar)>0:
+            memcache.add(wpfe.BLOG_URL+self.request.path,render)
         self.response.out.write(render)
             
 class Dispatcher(webapp.RequestHandler):
