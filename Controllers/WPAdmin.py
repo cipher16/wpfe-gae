@@ -1,20 +1,27 @@
 from google.appengine.ext import webapp
 from xml.dom.minidom import parseString
-
+from google.appengine.ext.webapp import template
+import wpfe
 from google.appengine.ext import db
 from Models.WordPress import *
 from Lib.DateTime import date
 
 class WPAdmin(webapp.RequestHandler):
     def get(self):
-        self.response.out.write("")
+        path = wpfe.TEMPLATE+"/admin/admin.html"
+        self.response.out.write(template.render(path,{}))
 
 class WPUploader(webapp.RequestHandler):
     def get(self):
-        self.response.out.write("Upload de fichiers<form method='post' enctype=\"multipart/form-data\" action=\"/admin/upload\"><input type=\"file\" name=\"myfile\" /><input type=\"submit\" /></form>")
+        path = wpfe.TEMPLATE+"/admin/upload.html"
+        self.response.out.write(template.render(path,{'ParentTmpl': wpfe.TEMPLATE+"/admin/admin.html"}))
 
     def post(self):
         file_contents = self.request.get('myfile')
+        info = {
+            'ParentTmpl': wpfe.TEMPLATE+"/admin/admin.html",
+            'Import':True
+        }
         if len(file_contents)==0:
             self.redirect("/admin/upload")
             return
@@ -23,7 +30,6 @@ class WPUploader(webapp.RequestHandler):
         end   = incre #Google's characters limitation
         Filen = len(file_contents)
         if Filen<end:
-            self.response.out.write("le fichier fait moins de 1Mo on stock direct")
             upload = BlogUpload()
             upload.content = file_contents
             upload.num = Filen
@@ -38,38 +44,41 @@ class WPUploader(webapp.RequestHandler):
                 upload.put()
                 start = end
                 end +=incre
-                self.response.out.write("une boucle ...<br />");
                 if nextBreak:
                     break
                 if end>Filen:
                     end=Filen
                     nextBreak=True
-            self.response.out.write("le fichier fait plus de 1 Mo, on explode en partie de 1Mo")
-        self.response.out.write("Importez les donnees : <a href='/admin/import/'>ici</a>")
-        #    self.redirect("/admin/import")#send to import part once we have stored data
-        #    return
-        #while(True):
-        #    cutFile = file_contents[start:end]
-        
+        self.redirect("/admin/import")
 
 class WPImporter(webapp.RequestHandler):
     def get(self):
-        self.response.out.write("Choose your last upload to import in DB :<br />")
         lastNum = 0
+        suppression = False
+        contenu = ""
+        upload = []
         if self.request.get('deleteContent'):
             d = db.GqlQuery("SELECT * FROM BlogUpload WHERE num=:1",int(self.request.get('num'))).fetch(100)
             db.delete(d)
+            suppression=True
         if self.request.get('displayContent'):
-            self.response.out.write("<textarea>")
             for d in db.GqlQuery("SELECT * FROM BlogUpload WHERE num=:1",int(self.request.get('num'))).fetch(100):
-                self.response.out.write(d.content)
-            self.response.out.write("</textarea>")
+                contenu+=d.content
         else:
             for i in db.GqlQuery("SELECT * FROM BlogUpload").fetch(100):
                 if lastNum != i.num:
                     lastNum=i.num
-                    self.response.out.write("<form method='post'><a href='/admin/import?deleteContent=true&num="+str(i.num)+"'>[SUPPRESSION]</a><input name='lastImport' type='hidden' value='"+str(i.num)+"' />Upload du : <a href='/admin/import?displayContent=true&num="+str(i.num)+"'>"+str(i.date)+"</a> ("+str(i.num)+" octets)<input type='submit' /></form>")
-                
+                    upload.append(i)
+        path = wpfe.TEMPLATE+"/admin/import.html"
+        self.response.out.write(template.render(path,
+            {
+                'ParentTmpl': wpfe.TEMPLATE+"/admin/admin.html",
+                'xmlContent': contenu,
+                'suppress':suppression,
+                'upload': upload
+            })
+        )       
+
     def post(self):
         #as the file is may be to big to be stored, we start processing :s
         file_contents = ""

@@ -1,0 +1,10 @@
+{% extends ParentTmpl %}
+{% block content %}
+Upload de fichiers
+
+<form method='post' enctype="multipart/form-data" action="/admin/upload">
+	<input type="file" name="myfile" />
+	<input type="submit" />
+</form>
+
+{% endblock %}

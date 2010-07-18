@@ -14,6 +14,7 @@ BLOG_FEED  = "http://feeds.feedburner.com/LeBlogDuGrandLoupZeur"
 NB_ARTICLE_HOME = 10
 APPLICATION_PATH = os.path.dirname(__file__)
 TEMPLATE = APPLICATION_PATH+"/Views/default"
+TEMPADMI = APPLICATION_PATH+"/Views/admin"
 
 application = webapp.WSGIApplication(
     [

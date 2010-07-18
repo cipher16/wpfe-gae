@@ -1,0 +1,22 @@
+ul.menuHaut li {
+	color: #FFFFFF;
+	display:inline;
+}
+
+.menu {
+	height:30px;
+	background-color: #001100;
+}
+
+li.menuHaut {
+	
+}
+
+.body {
+	width:90%;
+	margin: 0 auto;
+}
+
+a {
+	color: red;
+}
