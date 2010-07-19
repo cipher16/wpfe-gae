@@ -1,8 +1,6 @@
 from google.appengine.ext import db
 import wpfe
 
-def rewUrl(url):
-    return url.replace(wpfe.BLOG_URL ,"")
 def readMore(content,url,title):
     if content.find("<!--more-->")==-1:
         return content
@@ -14,7 +12,6 @@ class WPArticles:
     def getArticles(num=10, start=0):
         articles = db.GqlQuery('SELECT * FROM BlogPost WHERE type=:1 order by date DESC',"post").fetch(num,start)
         for ar in articles:
-            ar.link=rewUrl(ar.link)
             #ar.comments=WPComments.getComments(ar.idP)S
             ar.resume=readMore(ar.content,ar.link,ar.title)
             ar.category=WPCategory.genUrl(ar.cats)
@@ -38,13 +35,11 @@ class WPArticles:
         article = article[0]
         #article.comments = WPComments.getComments(article.idP)
         article.coms=article.comments.order('date')
-        article.link=rewUrl(article.link)
         return article
     @staticmethod
     def getArticlesByTag(tag,num=10,start=0):
         articles = db.GqlQuery('SELECT * FROM BlogPost WHERE tags = :1 AND type=:2 order by date DESC',tag,"post").fetch(num,start)
         for ar in articles:
-            ar.link=rewUrl(ar.link)
             #ar.comments=WPComments.getComments(ar.idP)S
             ar.resume=readMore(ar.content,ar.link,ar.title)
             ar.category=WPCategory.genUrl(ar.cats)
@@ -54,7 +49,6 @@ class WPArticles:
     def getArticlesByCat(cat,num=10,start=0):
         articles = db.GqlQuery('SELECT * FROM BlogPost WHERE cats = :1 AND type=:2 order by date DESC',cat,"post").fetch(num,start)
         for ar in articles:
-            ar.link=rewUrl(ar.link)
             #ar.comments=WPComments.getComments(ar.idP)S
             ar.resume=readMore(ar.content,ar.link,ar.title)
             ar.category=WPCategory.genUrl(ar.cats)
