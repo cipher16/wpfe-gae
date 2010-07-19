@@ -32,6 +32,7 @@ class Home(webapp.RequestHandler):
            'blog_name':wpfe.BLOG_NAME,
            'blog_descr':wpfe.BLOG_DESCR,
            'blog_feed':wpfe.BLOG_FEED,
+           'blog_about':wpfe.BLOG_ABOUT,
            'page':page,
            'nxtPage': (int(page)+1),
            'prvPage': (int(page)-1),
@@ -72,6 +73,7 @@ class Dispatcher(webapp.RequestHandler):
             'blog_name':wpfe.BLOG_NAME,
             'blog_descr':wpfe.BLOG_DESCR,
             'blog_feed':wpfe.BLOG_FEED,
+            'blog_about':wpfe.BLOG_ABOUT,
             'single':True,
             'nextArticle':nx,
             'prevArticle':pr
@@ -106,6 +108,7 @@ class TagsAndCats(webapp.RequestHandler):
            'blog_name':wpfe.BLOG_NAME,
            'blog_descr':wpfe.BLOG_DESCR,
            'blog_feed':wpfe.BLOG_FEED,
+           'blog_about':wpfe.BLOG_ABOUT,
            'page':page,
            'nxtPage': (int(page)+1),
            'prvPage': (int(page)-1),
