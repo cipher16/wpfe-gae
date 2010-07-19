@@ -1,0 +1,46 @@
+{% extends ParentTmpl %}
+{% block content %}
+<h1>Nettoyage de la base de données</h1>
+
+
+		<div class="panelAdmin tags" style="float: right;">
+			<h2>Les Tags</h2>
+			<ul>
+				{%for tag in tags%}
+					<li>{{tag.name}}</li>
+				{%endfor%}
+			</ul>
+			<a href="/admin/?page=nettoyage&del=tag">Supprimer tout les tags</a>
+		</div>
+		<div class="panelAdmin categories">
+			<h2>Les categories</h2>
+			<ul>
+				{%for cat in categories%}
+					<li>{{cat.catName}}</li>
+				{%endfor%}
+			</ul>
+			<a href="/admin/?page=nettoyage&del=cat">Supprimer toutes les categories</a>
+		</div>
+		<div style="clear:both;">&nbsp;</div>
+
+		<div class="panelAdmin comments" style="float: right;">
+			<h2>Les Commentaires</h2>
+			<ul>
+				{%for com in commentaires%}
+					<li>{{com.content|truncatewords:8}}</li>
+				{%endfor%}
+			</ul>
+			<a href="/admin/?page=nettoyage&del=com">Supprimer tout les commentaires</a>
+		</div>
+		<div class="panelAdmin blogpost">
+			<h2>Les Articles</h2>
+			<ul>
+				{%for art in articles%}
+					<li>{{art.title}}</li>
+				{%endfor%}
+			</ul>
+			<a href="/admin/?page=nettoyage&del=art">Supprimer tout les articles</a>
+		</div>
+		<div style="clear:both;"></div>
+
+{% endblock %}
