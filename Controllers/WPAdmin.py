@@ -7,6 +7,7 @@ from Models.WordPress import *
 from Lib.DateTime import date
 from google.appengine.api.labs.taskqueue import taskqueue
 import Models
+from google.appengine.api import memcache
 
 class WPAdmin(webapp.RequestHandler):
     def get(self):
@@ -15,9 +16,22 @@ class WPAdmin(webapp.RequestHandler):
         if self.request.get("page")=="nettoyage":
             path = wpfe.TEMPLATE+"/admin/nettoyage.html"
             valu = self.nettoyage(self.request.get("del"))
+        elif self.request.get("page")=="cache":
+            path = wpfe.TEMPLATE+"/admin/cache.html"
+            valu = self.cache(self.request.get("flush"))            
         else:
             path = wpfe.TEMPLATE+"/admin/admin.html"
         self.response.out.write(template.render(path,valu))
+        
+    def cache(self,f=""):
+        mem = memcache
+        if f!="":
+            mem.flush_all()
+        return {
+              'ParentTmpl': wpfe.TEMPLATE+"/admin/admin.html",
+              'cacheInfo': mem.get_stats()
+        }
+        
     def nettoyage(self,d=""):
         if d=="tag":
             db.delete(Models.WordPress.BlogTag.all())

@@ -1,0 +1,13 @@
+{% extends ParentTmpl %}
+{% block content %}
+		<h1>Information sur le cache</h1>
+		<ul>
+			<li>Hits : {{cacheInfo.hits}}</li>
+			<li>Misses : {{cacheInfo.misses}}</li>
+			<li>byte_hits : {{cacheInfo.byte_hits}}</li>
+			<li>items : {{cacheInfo.items}}</li>
+			<li>bytes : {{cacheInfo.bytes}}</li>
+			<li>oldest_item_age : {{cacheInfo.oldest_item_age}}</li>
+		</ul>
+		<a href="/admin/?page=cache&flush=1">Supprimer le cache</a>
+{% endblock %}
