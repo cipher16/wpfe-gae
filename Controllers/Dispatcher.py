@@ -3,6 +3,7 @@ from Lib.WordPress import *
 from google.appengine.ext.webapp import template
 import wpfe
 from google.appengine.api import memcache
+from Lib import RSS
 
 #type : 
 #    home (display 10)
@@ -120,3 +121,7 @@ class TagsAndCats(webapp.RequestHandler):
         render = template.render(path, template_values)
         memcache.add(wpfe.BLOG_URL+self.request.path,render)
         self.response.out.write(render)
+        
+class Feed(webapp.RequestHandler):
+    def get(self):
+        self.response.out.write(RSS.getFeedUrl(wpfe.BLOG_URL+self.request.path))

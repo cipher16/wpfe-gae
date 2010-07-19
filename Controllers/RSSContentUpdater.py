@@ -3,10 +3,11 @@ from Models.RSS import RSSContent
 from xml.dom.minidom import parse, parseString
 from google.appengine.api import urlfetch
 from google.appengine.ext import db
+import wpfe
 
 class RssContentUpdater(webapp.RequestHandler):        
     def get(self):
-        url = "http://blog.gaetan-grigis.eu/feed"
+        url = wpfe.BLOG_FEED
         xml = ""
         #recuperation de l'url
         results = db.GqlQuery("SELECT * FROM RSSContent WHERE url = :1", url).fetch(1)

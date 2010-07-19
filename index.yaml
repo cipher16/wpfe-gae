@@ -39,3 +39,9 @@ indexes:
   - name: type
   - name: date
     direction: desc
+
+- kind: RSSContent
+  properties:
+  - name: url
+  - name: date
+    direction: desc
