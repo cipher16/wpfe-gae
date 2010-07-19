@@ -6,11 +6,35 @@ from google.appengine.ext import db
 from Models.WordPress import *
 from Lib.DateTime import date
 from google.appengine.api.labs.taskqueue import taskqueue
+import Models
 
 class WPAdmin(webapp.RequestHandler):
     def get(self):
-        path = wpfe.TEMPLATE+"/admin/admin.html"
-        self.response.out.write(template.render(path,{}))
+        path=""
+        valu={}
+        if self.request.get("page")=="nettoyage":
+            path = wpfe.TEMPLATE+"/admin/nettoyage.html"
+            valu = self.nettoyage(self.request.get("del"))
+        else:
+            path = wpfe.TEMPLATE+"/admin/admin.html"
+        self.response.out.write(template.render(path,valu))
+    def nettoyage(self,d=""):
+        if d=="tag":
+            db.delete(Models.WordPress.BlogTag.all())
+        elif d=="com" :
+            db.delete(Models.WordPress.BlogComments.all())
+        elif d=="art" :
+            db.delete(Models.WordPress.BlogPost.all())
+        elif d=="cat" :
+            db.delete(Models.WordPress.BlogCategory.all())
+            
+        return {
+                'ParentTmpl': wpfe.TEMPLATE+"/admin/admin.html",
+                'tags':Models.WordPress.BlogTag.all().fetch(10),
+                'categories':Models.WordPress.BlogCategory.all().fetch(10),
+                'articles':Models.WordPress.BlogPost.all().order('-date').fetch(10),
+                'commentaires':Models.WordPress.BlogComments.all().order('-date').fetch(10)
+        }
 
 class WPUploader(webapp.RequestHandler):
     def get(self):
@@ -133,7 +157,7 @@ class WPImporter(webapp.RequestHandler):
             Postdate =   cat.getElementsByTagName('wp:post_date')[0].childNodes[0].nodeValue
             status = cat.getElementsByTagName('wp:status')[0].childNodes[0].nodeValue
             title = cat.getElementsByTagName('title')[0].childNodes[0].nodeValue
-            link = cat.getElementsByTagName('link')[0].childNodes[0].nodeValue
+            link = cat.getElementsByTagName('link')[0].childNodes[0].nodeValue.replace(wpfe.BLOG_URL,"")
             author = cat.getElementsByTagName('dc:creator')[0].childNodes[0].nodeValue
             type = cat.getElementsByTagName('wp:post_type')[0].childNodes[0].nodeValue
             #recuperation des categories et tags

@@ -10,11 +10,11 @@ BLOG_URL   = "http://blog.gaetan-grigis.eu"
 BLOG_NAME  = "Le Blog du Grand Loup Zeur"
 BLOG_DESCR = "le blog qui vous apprend ce que vous savez deja"
 BLOG_FEED  = "http://feeds.feedburner.com/LeBlogDuGrandLoupZeur"
+BLOG_ABOUT = "Blog d'un etudiant en informatique"
 
 NB_ARTICLE_HOME = 10
 APPLICATION_PATH = os.path.dirname(__file__)
 TEMPLATE = APPLICATION_PATH+"/Views/default"
-TEMPADMI = APPLICATION_PATH+"/Views/admin"
 
 application = webapp.WSGIApplication(
     [
@@ -22,7 +22,7 @@ application = webapp.WSGIApplication(
       ('/admin/upload',WPUploader),                    #import 100%
       ('/admin/import',WPImporter),                    #import 100% 
       ('/admin/rssUpdate', RssContentUpdater),         #50% parsing OK, need DB insertion + cron
-      ('/admin/',WPAdmin),                    #import 100% 
+      ('/admin/.*',WPAdmin),                     
      #blog part
       ('/', Home),                  #display several articles OK 100%
       ('/page/.*', Home),           #display page contents    OK 100%

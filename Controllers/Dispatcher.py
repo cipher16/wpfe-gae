@@ -53,7 +53,7 @@ class Dispatcher(webapp.RequestHandler):
             return 
         
         #retrieving data
-        ar = WPArticles.getArticleByUrl(wpfe.BLOG_URL+self.request.path)        
+        ar = WPArticles.getArticleByUrl(self.request.path)        
         if not ar:
             self.response.out.write("404")
             return
