@@ -16,9 +16,12 @@ Wordpress FrontEnd
 	CACHE system 90% (archive, single, home)
 	CRON task to import datas 0%
 	I18N ?? 0%
-	feed 0%
+	feed 90%
+
+Twitter
+	fetch twitter data
 
 ADMINISTRATION PAGES
 	import 50%
 	upload 50%
-	clean data 0%
+	clean data 90% (need memcache)

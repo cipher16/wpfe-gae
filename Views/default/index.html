@@ -103,6 +103,15 @@
   		<li>{{blog_about}}</li>
 	</ul>
 </li>
+
+<li class="archives">
+   <div class="sb-title">Les derniers articles</div>
+	<ul>
+	{%for article in archives%}
+	  <li><a href="{{article.link}}" title="{{article.title}}">{{article.title}}</a></li>
+	{%endfor%}
+	</ul>
+</li>
 {% if test %}<!-- Je sais pas a quoi ça sert ... -->
 	<li class="currently-viewing">
 		page en cours de visite
@@ -112,9 +121,9 @@
 
 <ul class="group">
   	<li class="archives">
-      <div class="sb-title">Archives</div>
+      <div class="sb-title">les Categories</div>
   		<ul>
-  		  <li>Des articles</li>
+  		  <li>&nbsp;</li>
   		</ul>
   	</li>
 </ul>
