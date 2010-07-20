@@ -100,6 +100,8 @@ class CDNMedia:
             media = WordPress.CDNMedia()
             #recuperation du media en ligne et insertion en base
             data = urlfetch.Fetch(url=url)
+            if not data:
+                return None
             media.content = data.content
             if "Content-Type" in data.headers:
                 media.type=data.headers["Content-Type"]
