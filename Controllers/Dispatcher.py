@@ -129,3 +129,13 @@ class Feed(webapp.RequestHandler):
     def get(self):
         self.response.headers["Content-Type"] = "text/xml"
         self.response.out.write(RSS.getFeedUrl(wpfe.BLOG_URL+self.request.path))
+        
+class CDN(webapp.RequestHandler):
+    def get(self):
+        url = self.request.path
+        media = CDNMedia.getMediaByUrl(wpfe.BLOG_URL+ url)
+        if not media:
+            self.error(404)
+            return
+        self.response.headers["Content-Type"] = media.type
+        self.response.out.write(media.content)

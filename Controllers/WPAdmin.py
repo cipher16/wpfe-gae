@@ -190,7 +190,7 @@ class WPImporter(webapp.RequestHandler):
                 #recuperation du texte et test sur le contenu        
                 cont = ""
                 try:
-                    cont = cat.getElementsByTagName('content:encoded')[0].childNodes[0].wholeText
+                    cont = cat.getElementsByTagName('content:encoded')[0].childNodes[0].wholeText.replace(wpfe.BLOG_URL,"")
                 except IndexError:
                     self.response.out.write(id+" has a empty content<br />\n")
                 r = db.GqlQuery('SELECT * FROM BlogPost WHERE idP = :1', int(id)).fetch(1)

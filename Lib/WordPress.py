@@ -1,5 +1,7 @@
 from google.appengine.ext import db
 import wpfe
+from google.appengine.api import urlfetch
+from Models import WordPress
 
 def readMore(content,url,title):
     if content.find("<!--more-->")==-1:
@@ -89,3 +91,19 @@ class WPTags:
         for tag in tags:
             url.append("<a href='/tag/"+tag+"'>"+WPTags.getName(tag)+"</a>")
         return ",".join(url)
+    
+class CDNMedia:
+    @staticmethod
+    def getMediaByUrl(url):
+        media = db.GqlQuery('SELECT * FROM CDNMedia WHERE url = :1',url).fetch(1)
+        if not media:
+            media = WordPress.CDNMedia()
+            #recuperation du media en ligne et insertion en base
+            data = urlfetch.Fetch(url=url)
+            media.content = data.content
+            if "Content-Type" in data.headers:
+                media.type=data.headers["Content-Type"]
+            media.put()
+        else:
+            media=media[0]
+        return media

@@ -34,3 +34,9 @@ class BlogUpload(db.Model):
     date = db.DateTimeProperty(auto_now_add=True)
     num  = db.IntegerProperty()
     content = db.BlobProperty()
+    
+class CDNMedia(db.Model):
+    date = db.DateTimeProperty(auto_now_add=True)
+    type = db.StringProperty()
+    content = db.BlobProperty()
+    url = db.StringProperty()
