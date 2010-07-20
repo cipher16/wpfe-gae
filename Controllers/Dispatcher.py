@@ -127,4 +127,5 @@ class TagsAndCats(webapp.RequestHandler):
         
 class Feed(webapp.RequestHandler):
     def get(self):
+        self.response.headers["Content-Type"] = "text/xml"
         self.response.out.write(RSS.getFeedUrl(wpfe.BLOG_URL+self.request.path))
