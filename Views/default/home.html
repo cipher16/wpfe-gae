@@ -2,7 +2,7 @@
 {% block content %}
 <div id="container">
 	<div id="content">
-	{%if archive%}<h1>Archive</h1>{%endif%}
+	{%if archive%}<h1 class="pagetitle">Archive {{title}}</h1>{%endif%}
 	{%if articles %}
 		{% for article in articles %}
 			<div id="post-{{ article.idP }}" class="post hentry category-uncategorized tag-2 tag-green-park tag-greenpark tag-list tag-theme tag-todo tag-todolist tag-two tag-wordpress">

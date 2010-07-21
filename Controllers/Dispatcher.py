@@ -4,6 +4,7 @@ from google.appengine.ext.webapp import template
 import wpfe
 from google.appengine.api import memcache
 from Lib import RSS
+import datetime
 
 #type : 
 #    home (display 10)
@@ -13,7 +14,7 @@ from Lib import RSS
 class Home(webapp.RequestHandler):
     def get(self):
         data = memcache.get(wpfe.BLOG_URL+self.request.path)
-        if data is not None:
+        if data is not None and wpfe.ENABLE_CACHE:
             self.response.out.write(data)
             return 
         
@@ -43,7 +44,7 @@ class Home(webapp.RequestHandler):
         path = wpfe.TEMPLATE+"/home.html"
 #saving memcache
         render = template.render(path, template_values)
-        if len(ar)>0:
+        if len(ar)>0 and wpfe.ENABLE_CACHE:
             memcache.add(wpfe.BLOG_URL+self.request.path,render)
         self.response.out.write(render)
             
@@ -51,7 +52,7 @@ class Dispatcher(webapp.RequestHandler):
     def get(self):
         #memcache system
         data = memcache.get(wpfe.BLOG_URL+self.request.path)
-        if data is not None:
+        if data is not None and wpfe.ENABLE_CACHE:
             self.response.out.write(data)
             return 
         
@@ -71,6 +72,7 @@ class Dispatcher(webapp.RequestHandler):
         
         template_values = {
             'article': ar,
+            'title':ar.title,
             'ParentTmpl': wpfe.TEMPLATE+"/index.html",
             'blog_name':wpfe.BLOG_NAME,
             'blog_descr':wpfe.BLOG_DESCR,
@@ -84,13 +86,15 @@ class Dispatcher(webapp.RequestHandler):
         path = wpfe.TEMPLATE+"/single.html"
 #saving memcache
         render = template.render(path, template_values)
-        memcache.add(wpfe.BLOG_URL+self.request.path,render)
+        
+        if wpfe.ENABLE_CACHE:
+            memcache.add(wpfe.BLOG_URL+self.request.path,render)
         self.response.out.write(render)
         
 class TagsAndCats(webapp.RequestHandler):
     def get(self):
         data = memcache.get(wpfe.BLOG_URL+self.request.path)
-        if data is not None:
+        if data is not None and wpfe.ENABLE_CACHE:
             self.response.out.write(data)
             return 
         page=1
@@ -105,6 +109,7 @@ class TagsAndCats(webapp.RequestHandler):
             return 404
         template_values = {
            'articles': ar,
+           'title':info[2],
            'ParentTmpl': wpfe.TEMPLATE+"/index.html",
            'archive':True,
            'home':True,
@@ -122,7 +127,8 @@ class TagsAndCats(webapp.RequestHandler):
         path = wpfe.TEMPLATE+"/home.html"
 #saving memcache
         render = template.render(path, template_values)
-        memcache.add(wpfe.BLOG_URL+self.request.path,render)
+        if wpfe.ENABLE_CACHE:
+            memcache.add(wpfe.BLOG_URL+self.request.path,render)
         self.response.out.write(render)
         
 class Feed(webapp.RequestHandler):
@@ -133,9 +139,11 @@ class Feed(webapp.RequestHandler):
 class CDN(webapp.RequestHandler):
     def get(self):
         url = self.request.path
-        media = CDNMedia.getMediaByUrl(wpfe.BLOG_URL+ url)
+        media = CDNMedia.getMediaByUrl(wpfe.BLOG_URL+url)
         if not media:
             self.error(404)
             return
         self.response.headers["Content-Type"] = media.type
+        self.response.headers["Expires"] = (datetime.datetime.now()+datetime.timedelta(seconds=wpfe.CACHE_TIME)).strftime('%a, %d %b %Y %H:%M:%S ')+"GMT"
+        self.response.headers["Cache-Control"] = "max-age="+str(wpfe.CACHE_TIME)
         self.response.out.write(media.content)

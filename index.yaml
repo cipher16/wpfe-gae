@@ -40,6 +40,17 @@ indexes:
   - name: date
     direction: desc
 
+- kind: BlogPost
+  properties:
+  - name: type
+  - name: idP
+
+- kind: BlogPost
+  properties:
+  - name: type
+  - name: idP
+    direction: desc
+
 - kind: RSSContent
   properties:
   - name: url

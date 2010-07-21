@@ -4,10 +4,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=8" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-<title>{{blog_name}}</title>
+<title>{%if title %}{{title}} - {{blog_name}}{%else%}{{blog_name}} - {{blog_descr}}{%endif%}</title>
 
 <link rel="stylesheet" href="/style.css" type="text/css" media="all" />
-<link rel="stylesheet" href="/img/sourceCode.css" type="text/css" media="all" />
 <!--[if IE 6]>
 <link rel="stylesheet" href="/ie6.css" type="text/css" />
 <![endif]-->
@@ -148,7 +147,7 @@
 </p>
 
 <p class="signet">
-  Valid XHTML 1.0 Transitional | Valid CSS 3
+  Valid XHTML 1.0 Transitional | Valid CSS 3 (En fait, carrément pas, mais ça fait classe)
   <br /><br />
 	<img src="/img/logo-cgp2.png" alt="Cordobo Green Park 2 logo" title="Cordobo Green Park 2" width="75" height="12" />
 </p>

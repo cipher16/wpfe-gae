@@ -2,6 +2,7 @@ from google.appengine.ext import db
 import wpfe
 from google.appengine.api import urlfetch
 from Models import WordPress
+import logging
 
 def readMore(content,url,title):
     if content.find("<!--more-->")==-1:
@@ -21,10 +22,10 @@ class WPArticles:
         return articles
     @staticmethod
     def getNextArticles(id,num=1):
-        return db.GqlQuery('SELECT * FROM BlogPost WHERE idP > :1 order by idP ASC',id).fetch(num)
+        return db.GqlQuery('SELECT * FROM BlogPost WHERE idP > :1 AND type=:2 order by idP ASC',id,"post").fetch(num)
     @staticmethod
     def getPrevArticles(id,num=1):
-        return db.GqlQuery('SELECT * FROM BlogPost WHERE idP < :1 order by idP DESC',id).fetch(num)
+        return db.GqlQuery('SELECT * FROM BlogPost WHERE idP < :1 AND type=:2 order by idP DESC',id,"post").fetch(num)
     @staticmethod
     def getArticle(id):
         article = db.GqlQuery('SELECT * FROM BlogPost WHERE idP = :1',id).fetch(1)
@@ -97,12 +98,14 @@ class CDNMedia:
     def getMediaByUrl(url):
         media = db.GqlQuery('SELECT * FROM CDNMedia WHERE url = :1',url).fetch(1)
         if not media:
+            logging.info("Telechargement du fichier : "+url)
             media = WordPress.CDNMedia()
             #recuperation du media en ligne et insertion en base
             data = urlfetch.Fetch(url=url)
             if not data:
                 return None
             media.content = data.content
+            media.url = url
             if "Content-Type" in data.headers:
                 media.type=data.headers["Content-Type"]
             media.put()
