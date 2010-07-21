@@ -59,7 +59,7 @@ class Dispatcher(webapp.RequestHandler):
         #retrieving data
         ar = WPArticles.getArticleByUrl(self.request.path)        
         if not ar:
-            self.response.out.write("404")
+            self.error(404)
             return
         pr = WPArticles.getPrevArticles(ar.idP, 1)
         nx = WPArticles.getNextArticles(ar.idP, 1)

@@ -91,8 +91,8 @@
 {% if single %}
 <li>
 	<ul class="sb-tools clearfix">
-		{% if prevArticle %}<li class="previous-post"><a href="{{prevArticle.link}}" rel="prev"><span>Article précédent</span> {{prevArticle.title}}</a></li>{%endif%}
-		{% if nextArticle %}<li class="next-post"><a href="{{nextArticle.link}}" rel="next"><span>Article suivant</span> {{nextArticle.title}}</a></li>{%endif%}
+		{% if prevArticle %}<li class="previous-post"><a href="{{prevArticle.link}}" title="{{prevArticle.title}}" rel="prev"><span>Article précédent</span> {{prevArticle.title}}</a></li>{%endif%}
+		{% if nextArticle %}<li class="next-post"><a href="{{nextArticle.link}}" title="{{nextArticle.title}}" rel="next"><span>Article suivant</span> {{nextArticle.title}}</a></li>{%endif%}
 	</ul>	
 </li>
 {% endif %}
