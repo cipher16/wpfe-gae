@@ -34,7 +34,7 @@ application = webapp.WSGIApplication(
       ('/page/.*', Home),           #display page contents    OK 100%
       ('/tag/.*', TagsAndCats),     #archive system              100%
       ('/category/.*', TagsAndCats),#archive system              100%
-      ('/feed.*', Feed),           #feed generator               90% recuperation depuis la base de données ?
+      ('/feed.*', Feed),           #feed generator               90% recuperation depuis la base de donnees ?
       ('/wp-content.*',CDN),
       ('/.*', Dispatcher)           #display single article   OK 100%
     ],debug=True)
