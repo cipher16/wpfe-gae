@@ -3,8 +3,7 @@ from Lib.WordPress import *
 from google.appengine.ext.webapp import template
 import wpfe
 from google.appengine.api import memcache
-from Lib import RSS
-import datetime
+from Lib import RSS, DateTime
 
 #type : 
 #    home (display 10)
@@ -144,6 +143,6 @@ class CDN(webapp.RequestHandler):
             self.error(404)
             return
         self.response.headers["Content-Type"] = media.type
-        self.response.headers["Expires"] = (datetime.datetime.now()+datetime.timedelta(seconds=wpfe.CACHE_TIME)).strftime('%a, %d %b %Y %H:%M:%S ')+"GMT"
-        self.response.headers["Cache-Control"] = "max-age="+str(wpfe.CACHE_TIME)
+        self.response.headers["Expires"] = DateTime.getGmt()
+        self.response.headers["Cache-Control"] = "max-age="+str(wpfe.CDN_CACHE_TIME)
         self.response.out.write(media.content)

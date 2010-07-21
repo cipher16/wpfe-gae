@@ -1,5 +1,9 @@
 import time
 import datetime
+import wpfe
+
+def getGmt():
+    return (datetime.datetime.now()+datetime.timedelta(seconds=wpfe.CDN_CACHE_TIME)).strftime('%a, %d %b %Y %H:%M:%S ')+"GMT"
 
 class date:
     @staticmethod

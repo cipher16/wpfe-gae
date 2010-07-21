@@ -14,7 +14,7 @@ BLOG_FEED  = "http://feeds.feedburner.com/LeBlogDuGrandLoupZeur"
 BLOG_ABOUT = "Blog d'un etudiant en informatique"
 
 ENABLE_CACHE = False
-CACHE_TIME = 3600000 #in seconds
+CDN_CACHE_TIME = 3600000 #in seconds
 FEED_REFRESH = 36000 #in minutes
 NB_ARTICLE_HOME = 10 #numbers of articles to display per page
 
@@ -30,7 +30,7 @@ application = webapp.WSGIApplication(
       ('/admin/upload',WPUploader),                    #import 100%
       ('/admin/import',WPImporter),                    #import 100% 
       ('/admin/rssUpdate', RssContentUpdater),         #50% parsing OK, need DB insertion + cron
-      ('/admin/.*',WPAdmin),                     
+      ('/admin.*',WPAdmin),                     
      #blog part
       ('/', Home),                  #display several articles OK 100%
       ('/page/.*', Home),           #display page contents    OK 100%
