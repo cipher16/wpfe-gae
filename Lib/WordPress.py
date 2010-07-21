@@ -1,5 +1,4 @@
 from google.appengine.ext import db
-import wpfe
 from google.appengine.api import urlfetch
 from Models import WordPress
 import logging
@@ -78,6 +77,9 @@ class WPCategory:
         for cat in cats:
             url.append("<a href='/category/"+cat+"'>"+WPCategory.getName(cat)+"</a>")
         return ",".join(url)
+    @staticmethod
+    def getCategories():
+        return WordPress.BlogCategory().all().order('niceName')
 
 class WPTags:
     @staticmethod

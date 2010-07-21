@@ -123,7 +123,9 @@
   	<li class="archives">
       <div class="sb-title">les Categories</div>
   		<ul>
-  		  <li>&nbsp;</li>
+			{%for cat in categories%}
+			  <li><a href="/category/{{cat.niceName}}" title="{{cat.catName}}">{{cat.catName}}</a></li>
+			{%endfor%}
   		</ul>
   	</li>
 </ul>

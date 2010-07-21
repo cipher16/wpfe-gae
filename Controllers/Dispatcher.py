@@ -35,6 +35,7 @@ class Home(webapp.RequestHandler):
            'blog_feed':wpfe.BLOG_FEED,
            'blog_about':wpfe.BLOG_ABOUT,
            'archives': WPArticles.getArticles(5,0),
+           'categories':WPCategory.getCategories(),
            'page':page,
            'nxtPage': (int(page)+1),
            'prvPage': (int(page)-1),
@@ -78,6 +79,7 @@ class Dispatcher(webapp.RequestHandler):
             'blog_feed':wpfe.BLOG_FEED,
             'blog_about':wpfe.BLOG_ABOUT,
             'archives': WPArticles.getArticles(5,0),
+            'categories':WPCategory.getCategories(),
             'single':True,
             'nextArticle':nx,
             'prevArticle':pr
@@ -117,6 +119,7 @@ class TagsAndCats(webapp.RequestHandler):
            'blog_feed':wpfe.BLOG_FEED,
            'blog_about':wpfe.BLOG_ABOUT,
            'archives': WPArticles.getArticles(5,0),
+           'categories':WPCategory.getCategories(),
            'page':page,
            'nxtPage': (int(page)+1),
            'prvPage': (int(page)-1),
