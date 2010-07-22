@@ -7,7 +7,7 @@ from Controllers.Dispatcher import *
 import os
 
 #blog configuration
-BLOG_URL   = "http://blog.gaetan-grigis.eu"
+BLOG_URL   = "http://blog.gaetan-grigis.eu"                     #very important ... to get images, documents, feeds, ...
 BLOG_NAME  = "Le Blog du Grand Loup Zeur"
 BLOG_DESCR = "le blog qui vous apprend ce que vous savez deja"
 BLOG_FEED  = "http://feeds.feedburner.com/LeBlogDuGrandLoupZeur"
@@ -20,7 +20,7 @@ TWITTER_CACHE = 36000 # in minutes
 ENABLE_CACHE   = False
 ART_CACHE_TIME = 36000   #in minutes
 CDN_CACHE_TIME = 3600000 #in minutes
-FEED_REFRESH   = 36000     #in minutes
+FEED_REFRESH   = 36000   #in minutes
 NB_ARTICLE_HOME = 10     #numbers of articles to display per page
 
 #template, don't touch this if you haven't modified a template
