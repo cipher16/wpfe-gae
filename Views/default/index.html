@@ -1,25 +1,23 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head profile="http://gmpg.org/xfn/11">
-<meta http-equiv="X-UA-Compatible" content="IE=8" />
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-<title>{%if title %}{{title}} - {{blog_name}}{%else%}{{blog_name}} - {{blog_descr}}{%endif%}</title>
-
-<link rel="stylesheet" href="/style.css" type="text/css" media="all" />
-<!--[if IE 6]>
-<link rel="stylesheet" href="/ie6.css" type="text/css" />
-<![endif]-->
-
-<meta name="robots" content="index,follow" />
-<link rel="alternate" type="application/rss+xml" title="{{blog_name}} RSS Feed" href="{{blog_feed}}" />
-<link rel="alternate" type="application/atom+xml" title="{{blog_name}} Atom Feed" href="{{blog_feed}}" />
-<link rel="pingback" href="pingbackUrl" />
-<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-
+	<meta http-equiv="X-UA-Compatible" content="IE=8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>{%if title %}{{title}} - {{blog_name}}{%else%}{{blog_name}} - {{blog_descr}}{%endif%}</title>
+	<link rel="stylesheet" href="/style.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="/img/js/prettify.css" type="text/css" media="all" />
+	<script type="text/javascript" src="/img/js/prettify.js"></script>
+	<!--[if IE 6]>
+	<link rel="stylesheet" href="/ie6.css" type="text/css" />
+	<![endif]-->
+	<meta name="robots" content="index,follow" />
+	<link rel="alternate" type="application/rss+xml" title="{{blog_name}} RSS Feed" href="{{blog_feed}}" />
+	<link rel="alternate" type="application/atom+xml" title="{{blog_name}} Atom Feed" href="{{blog_feed}}" />
+	<link rel="pingback" href="pingbackUrl" />
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 </head>
 
-<body id="home">
+<body id="home" onload="prettyPrint()">
 <div id="accessibility">
 	<ul>
 		<li><a href="/" title="Accueil">Accueil</a></li>
@@ -68,7 +66,7 @@
 				<li class="twitter-icon">
 		    	<a class="sb-icon" href="http://twitter.com/loupzeur" rel="nofollow">
 		    		<span>Dernier tweet</span>	
-		    		Les kikoolols attaquent
+		    		{{twitter.text}}<br />{{twitter.created_at}}
 		      </a>
 		    	<p class="sb-icon-text">
 		        <a href="http://twitter.com/loupzeur" rel="nofollow">Follow Me</a>.

@@ -3,7 +3,7 @@ from Lib.WordPress import *
 from google.appengine.ext.webapp import template
 import wpfe
 from google.appengine.api import memcache
-from Lib import RSS, DateTime
+from Lib import RSS, DateTime, Twitter
 
 #type : 
 #    home (display 10)
@@ -36,6 +36,7 @@ class Home(webapp.RequestHandler):
            'blog_about':wpfe.BLOG_ABOUT,
            'archives': WPArticles.getArticles(5,0),
            'categories':WPCategory.getCategories(),
+           'twitter':Twitter.getLastTweet(wpfe.TWITTER_LOGIN),
            'page':page,
            'nxtPage': (int(page)+1),
            'prvPage': (int(page)-1),
@@ -79,6 +80,7 @@ class Dispatcher(webapp.RequestHandler):
             'blog_feed':wpfe.BLOG_FEED,
             'blog_about':wpfe.BLOG_ABOUT,
             'archives': WPArticles.getArticles(5,0),
+            'twitter':Twitter.getLastTweet(wpfe.TWITTER_LOGIN),
             'categories':WPCategory.getCategories(),
             'single':True,
             'nextArticle':nx,
@@ -119,6 +121,7 @@ class TagsAndCats(webapp.RequestHandler):
            'blog_feed':wpfe.BLOG_FEED,
            'blog_about':wpfe.BLOG_ABOUT,
            'archives': WPArticles.getArticles(5,0),
+           'twitter':Twitter.getLastTweet(wpfe.TWITTER_LOGIN),
            'categories':WPCategory.getCategories(),
            'page':page,
            'nxtPage': (int(page)+1),
