@@ -35,13 +35,13 @@ application = webapp.WSGIApplication(
       ('/admin/upload',WPUploader),                    #import 100%
       ('/admin/import',WPImporter),                    #import 100% 
       ('/admin/rssUpdate', RssContentUpdater),         #50% parsing OK, need DB insertion + cron
-      ('/admin.*',WPAdmin),                     
+      ('/admin/.*',WPAdmin),                     
      #blog part
       ('/', Home),                  #display several articles OK 100%
       ('/page/.*', Home),           #display page contents    OK 100%
       ('/tag/.*', TagsAndCats),     #archive system              100%
       ('/category/.*', TagsAndCats),#archive system              100%
-      ('/feed.*', Feed),           #feed generator               90% recuperation depuis la base de donnees ?
+      ('/feed.*', Feed),            #feed generator               90% recuperation depuis la base de donnees ?
       ('/wp-content.*',CDN),
       ('/.*', Dispatcher)           #display single article   OK 100%
     ],debug=True)
