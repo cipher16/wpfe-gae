@@ -64,13 +64,42 @@
 		<li>
 			<ul class="sb-tools clearfix">
 				<li class="twitter-icon">
-		    	<a class="sb-icon" href="http://twitter.com/loupzeur" rel="nofollow">
-		    		<span>Dernier tweet</span>	
-		    		{{twitter.text}}<br />{{twitter.created_at}}
-		      </a>
-		    	<p class="sb-icon-text">
-		        <a href="http://twitter.com/loupzeur" rel="nofollow">Follow Me</a>.
-		      </p>
+			    	<a class="sb-icon" href="http://twitter.com/{{twitter}}" rel="nofollow"><span>Derniers tweets</span></a>
+			    </li>
+			    <li>
+			    	<div>
+						<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+						<script>
+						new TWTR.Widget({
+						  version: 2,
+						  type: 'profile',
+						  rpp: 2,
+						  interval: 6000,
+						  width: 250,
+						  height: 300,
+						  theme: {
+						    shell: {
+						      background: '#ffffff',
+						      color: '#c54f0b'
+						    },
+						    tweets: {
+						      background: '#ffffff',
+						      color: '#000000',
+						      links: '#c54f0b'
+						    }
+						  },
+						  features: {
+						    scrollbar: false,
+						    loop: false,
+						    live: false,
+						    hashtags: true,
+						    timestamp: true,
+						    avatars: false,
+						    behavior: 'all'
+						  }
+						}).render().setUser('{{twitter}}').start();
+						</script>
+					</div>
 				</li>
 			</ul>
 		</li>

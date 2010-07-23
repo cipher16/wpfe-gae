@@ -17,7 +17,7 @@ BLOG_ABOUT = "Blog d'un etudiant en informatique"
 TWITTER_LOGIN = "loupzeur"
 TWITTER_CACHE = 36000 # in minutes
 
-ENABLE_CACHE   = False
+ENABLE_CACHE   = True
 ART_CACHE_TIME = 36000   #in minutes
 CDN_CACHE_TIME = 3600000 #in minutes
 FEED_REFRESH   = 36000   #in minutes
