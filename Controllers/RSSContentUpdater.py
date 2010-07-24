@@ -4,7 +4,7 @@ from xml.dom.minidom import parse, parseString
 from google.appengine.api import urlfetch
 from google.appengine.ext import db
 import wpfe
-
+""" a supprimer """
 class RssContentUpdater(webapp.RequestHandler):        
     def get(self):
         url = wpfe.BLOG_FEED

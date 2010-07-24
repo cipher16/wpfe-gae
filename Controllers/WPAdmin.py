@@ -4,10 +4,10 @@ from google.appengine.ext.webapp import template
 import wpfe
 from google.appengine.ext import db
 from Models.WordPress import *
-from Lib.DateTime import date
 from google.appengine.api.labs.taskqueue import taskqueue
 import Models
 from google.appengine.api import memcache
+from Lib import DateTime, WPXMLRPC, UpdateRPC
 
 class WPAdmin(webapp.RequestHandler):
     def get(self):
@@ -18,11 +18,13 @@ class WPAdmin(webapp.RequestHandler):
             valu = self.nettoyage(self.request.get("del"))
         elif self.request.get("page")=="cache":
             path = wpfe.TEMPLATE+"/admin/cache.html"
-            valu = self.cache(self.request.get("flush"))            
+            valu = self.cache(self.request.get("flush"))     
+        elif self.request.get("page")=="rpcupdate":
+            path = wpfe.TEMPLATE+"/admin/rpc.html"
+            valu = self.rpc(self.request.get("par"))            
         else:
             path = wpfe.TEMPLATE+"/admin/admin.html"
         self.response.out.write(template.render(path,valu))
-        
     def cache(self,f=""):
         mem = memcache
         if f!="":
@@ -31,7 +33,6 @@ class WPAdmin(webapp.RequestHandler):
               'ParentTmpl': wpfe.TEMPLATE+"/admin/admin.html",
               'cacheInfo': mem.get_stats()
         }
-        
     def nettoyage(self,d=""):
         if d=="tag":
             db.delete(Models.WordPress.BlogTag.all())
@@ -49,6 +50,13 @@ class WPAdmin(webapp.RequestHandler):
                 'articles':Models.WordPress.BlogPost.all().order('-date').fetch(10),
                 'commentaires':Models.WordPress.BlogComments.all().order('-date').fetch(10)
         }
+    def rpc(self,par):
+        text=""
+        if par=="syncpost":
+            text=UpdateRPC.syncPost(5)
+        elif par=="synccats":
+            text=UpdateRPC.syncCats()
+        return {'ParentTmpl': wpfe.TEMPLATE+"/admin/admin.html","texte":text}
 
 class WPUploader(webapp.RequestHandler):
     def get(self):
@@ -198,7 +206,7 @@ class WPImporter(webapp.RequestHandler):
                 if not r and cont!="":
                     n = BlogPost()
                     n.idP = int(id)
-                    n.date = date.StrToDateTime(Postdate)
+                    n.date = DateTime.StrToDateTime(Postdate)
                     n.title = title
                     n.author = author
                     n.status = status
@@ -230,7 +238,7 @@ class WPImporter(webapp.RequestHandler):
                                 if not r:
                                     nCom = BlogComments()
                                     nCom.idP = int(comId)
-                                    nCom.date = date.StrToDateTime(comDa)
+                                    nCom.date = DateTime.StrToDateTime(comDa)
                                     nCom.author = comAu
                                     nCom.authorIp = comAI
                                     nCom.authorMail = comAe

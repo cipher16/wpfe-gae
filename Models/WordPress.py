@@ -25,6 +25,8 @@ class BlogComments(db.Model):
 class BlogCategory(db.Model):
     niceName = db.StringProperty()
     catName = db.StringProperty()
+    catId = db.IntegerProperty()
+    catParentId = db.IntegerProperty()
 
 class BlogTag(db.Model):
     slug = db.StringProperty()

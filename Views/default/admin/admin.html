@@ -14,7 +14,8 @@
 					<li class="menuHaut"><a href="/admin/?page=nettoyage">Nettoyage de la base</a> | </li>
 					<li class="menuHaut"><a href="/admin/?page=cache">Nettoyage du cache</a> | </li>
 					<li class="menuHaut"><a href="#">Importer les médias</a> | </li>
-					<li class="menuHaut"><a href="#">Feed Update</a></li>
+					<!-- <li class="menuHaut"><a href="#">Feed Update</a> | </li> -->
+					<li class="menuHaut"><a href="/admin/?page=rpcupdate">RPC Update</a></li>
 				</ul>
 			</div>
 			<div class="content">
@@ -25,12 +26,20 @@
 						<li>Allez dans l'import et choisissez le dernier import uploadé</li>
 						<li>Profitez de votre frontend</li>
 					</ol>
+					Ou bien vous pouvez utiliser le système de requête XML RPC (à activer sur votre blog)
+					<ol>
+						<li>Autorisez les requêtes XML RPC en écriture sur votre blog (partie administration)</li>
+						<li>Créez un utilisateur sur votre blog spécifique a WPFE (histoire d'avoir un autre compte que celui de l'administrateur)</li>
+						<li>Changez le login/mot de passe dans la configuration liée au XML RPC </li>						
+						<li>Cliquez sur le lien RPC Update, et mettez à jour ce que vous voulez.</li>
+					</ol>
 				<h2>Si vous venez pour administrer votre blog ...</h2>
 					Il faut savoir que ceci n'est pas un blog, mais un FRONT END pour wordpress, destiné à réduire la charge de votre serveur.<br />
 					Les actions possibles sont :
 					<ul>
-						<li>L'importation de nouveaux articles par feed RSS</li>
+						<li>L'importation de nouveaux articles par flux RSS</li>
 						<li>Le nettoyage de votre base de données</li>
+						<li>Le nettoyage du cache (memcache)</li>
 						<li>L'utilisation en CDN pour les médias</li>
 						<li>...</li>
 					</ul>

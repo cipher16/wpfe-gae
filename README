@@ -5,6 +5,9 @@ Modifiez app.yaml pour y mettre l'identifiant de votre application
 Puis uploadez le site sur les google APPENGINE
 Uploadez l'export XML de votre blog sur le site et c'est normalement bon
 
+En préparation : 
+	import via XMLRPC pour à peu près tout (need test ;))
+	
 
 TODO:
 

@@ -19,7 +19,7 @@ def getLastTweet(user):
     #        if len(elem.childNodes)>0:
     #python sux ... incapable de faire un truc aussi simple !!
     #            tab[str(elem.nodeName)]=elem.childNodes[0].nodeValue
-        tab = memcache.add("twitter_"+user,tab,(wpfe.TWITTER_CACHE*60))
+        memcache.add("twitter_"+user,tab,(wpfe.TWITTER_CACHE*60))
         return tab
     except Exception:
         return None

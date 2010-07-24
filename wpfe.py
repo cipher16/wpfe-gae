@@ -23,6 +23,11 @@ CDN_CACHE_TIME = 3600000 #in minutes
 FEED_REFRESH   = 36000   #in minutes
 NB_ARTICLE_HOME = 10     #numbers of articles to display per page
 
+#RPC
+RPC_URL = "http://127.0.0.1/xmlrpc.php"
+RPC_LOGIN = 'admin'
+RPC_PASSW = '123456'
+
 #template, don't touch this if you haven't modified a template
 APPLICATION_PATH = os.path.dirname(__file__)
 TEMPLATE = APPLICATION_PATH+"/Views/default"
@@ -34,7 +39,7 @@ application = webapp.WSGIApplication(
      #administration part
       ('/admin/upload',WPUploader),                    #import 100%
       ('/admin/import',WPImporter),                    #import 100% 
-      ('/admin/rssUpdate', RssContentUpdater),         #50% parsing OK, need DB insertion + cron
+      ('/admin/rssUpdate', RssContentUpdater),         #50% parsing OK, need DB insertion + cron --> to delete will use XML RPC request
       ('/admin/.*',WPAdmin),                     
      #blog part
       ('/', Home),                  #display several articles OK 100%

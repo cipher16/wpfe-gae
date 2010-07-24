@@ -13,7 +13,7 @@
 	<meta name="robots" content="index,follow" />
 	<link rel="alternate" type="application/rss+xml" title="{{blog_name}} RSS Feed" href="{{blog_feed}}" />
 	<link rel="alternate" type="application/atom+xml" title="{{blog_name}} Atom Feed" href="{{blog_feed}}" />
-	<link rel="pingback" href="pingbackUrl" />
+	<link rel="pingback" href="pingbackUrl" /><!-- TODO: Faire une sorte de proxy pour les requetes xml rpc -->
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 </head>
 
@@ -39,6 +39,7 @@
 	
 	<div id="nav">
 		<div id="nav-search">
+		<!-- A Améliorer -->
 			<form action="http://www.google.fr/cse" id="cse-search-box" target="_blank">
 			    <input type="hidden" name="cx" value="partner-pub-2453885831343505:9kuqtw-mr0j">
 			    <input type="hidden" name="ie" value="ISO-8859-1">
