@@ -1,10 +1,11 @@
 {% extends ParentTmpl %}
 {% block content %}
 		<h1>Les mise à jour XML-RPC</h1>
-		Synchroniser :
+		Synchroniser :<br />
+		Attention, la synchronisation des categories nécessite un fichier xmlrpc.php spécifique à installer sur votre blog.
 		<ul>
 			<li><a href="/admin/?page=rpcupdate&par=syncpost">Les articles</a></li>
-			<li><a href="/admin/?page=rpcupdate&par=synccats">Les categories (nécessite un xmlrpc.php modifié sur votre blog)</a></li>
+			<li><a href="/admin/?page=rpcupdate&par=synccats">Les categories</a></li>
 			<li><a href="/admin/?page=rpcupdate&par=synctags">Les tags</a></li>
 			<li><a href="/admin/?page=rpcupdate&par=synccoms">Les commentaires</a></li>
 		</ul>
