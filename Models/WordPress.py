@@ -21,6 +21,7 @@ class BlogComments(db.Model):
     date = db.DateTimeProperty()
     content = db.TextProperty()
     post = db.ReferenceProperty(BlogPost,collection_name="comments")#BlogPost
+    sync = db.IntegerProperty()# 1 = sync with blog | 0 means to sync with the blog
 
 class BlogCategory(db.Model):
     niceName = db.StringProperty()

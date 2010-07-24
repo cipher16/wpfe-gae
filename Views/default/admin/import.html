@@ -1,13 +1,13 @@
 {% extends ParentTmpl %}
 {% block content %}
+	<h1>Import de contenu</h1>
 	{%if upload %}
-		<h1>Import de contenu</h1>
 		<h2>Choisissez l'upload à utiliser :</h2> 
 		{% for up in upload %}
 				<a href='/admin/import?deleteContent=true&num={{up.num}}'>[SUPPRESSION]</a>
 				<input name='lastImport' type='hidden' value='{{up.num}}' />
 				Upload du : <a href='/admin/import?displayContent=true&num={{up.num}}'>{{up.date}}</a> ({{up.num}} octets)
-				<a href="/admin/import?startTask=true&num={{up.num}}">Mettre en queue l'import de cet upload</a>
+				<a href="/admin/import?startTask=true&num={{up.num}}">Mettre en queue l'import de cet upload</a><br />
 		{% endfor %}
 	{%endif%}
 	{%ifnotequal xmlContent "" %}

@@ -56,6 +56,10 @@ class WPAdmin(webapp.RequestHandler):
             text=UpdateRPC.syncPost(5)
         elif par=="synccats":
             text=UpdateRPC.syncCats()
+        elif par=="synctags":
+            text=UpdateRPC.syncTags()
+        elif par=="synccoms":
+            text=UpdateRPC.syncComments()
         return {'ParentTmpl': wpfe.TEMPLATE+"/admin/admin.html","texte":text}
 
 class WPUploader(webapp.RequestHandler):
