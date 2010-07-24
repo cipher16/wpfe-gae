@@ -2,6 +2,7 @@ from Lib import WPXMLRPC
 import wpfe
 from google.appengine.ext import db
 from Models.WordPress import BlogPost, BlogCategory, BlogTag, BlogComments
+from Lib.WordPress import WPCategory, WPTags
 
 #look back 5 post query db and update
 def syncPost(nbPost=5):
@@ -23,7 +24,10 @@ def syncPost(nbPost=5):
             post.date = p.date
             post.link = p.link
             post.type = "post"
-            #post.cats = p.categories
+            for cat in p.categories:#overcrade!!!!
+                post.cats.append(WPCategory.getSlug(cat))
+            for tag in p.tags.split(", "):#overcrade!!!!
+                post.tags.append(WPTags.getSlug(tag))
             post.put()
     return "Synchronisation de "+str(nbUp)+" sur "+str(nbDown)
 

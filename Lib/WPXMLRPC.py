@@ -169,6 +169,7 @@ class WordPressClient:
         postObj.allowComments     = post['mt_allow_comments'] == 1
         postObj.id                 = int(post['postid'])
         postObj.categories         = post['categories']
+        postObj.tags         = post['mt_keywords']
         postObj.allowPings         = post['mt_allow_pings'] == 1
         return postObj
         

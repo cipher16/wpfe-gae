@@ -72,6 +72,12 @@ class WPCategory:
             return None
         return cat[0].catName    
     @staticmethod
+    def getSlug(cat):
+        cat = db.GqlQuery('SELECT * FROM BlogCategory WHERE catName = :1',cat).fetch(1)
+        if not cat:
+            return None
+        return cat[0].niceName
+    @staticmethod
     def genUrl(cats):
         url = []
         for cat in cats:
@@ -88,6 +94,12 @@ class WPTags:
         if not tag:
             return None
         return tag[0].name
+    @staticmethod
+    def getSlug(tag):
+        tag = db.GqlQuery('SELECT * FROM BlogTag WHERE name = :1',tag).fetch(1)
+        if not tag:
+            return None
+        return tag[0].slug
     @staticmethod
     def genUrl(tags):
         url = []
