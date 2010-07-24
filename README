@@ -27,4 +27,7 @@ Twitter
 ADMINISTRATION PAGES
 	import 50%
 	upload 50%
-	clean data 90% (need memcache)
+	clean data 100% (need memcache)
+
+Pour utiliser le service XML-RPC, il faut utiliser la version modifié dans le dossier racine du projet.
+Il s'agit d'une version pour WP 3.0 ...
