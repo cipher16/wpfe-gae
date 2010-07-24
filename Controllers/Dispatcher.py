@@ -110,7 +110,7 @@ class TagsAndCats(webapp.RequestHandler):
             ar = WPArticles.getArticlesByCat(info[2],wpfe.NB_ARTICLE_HOME,(page-1)*wpfe.NB_ARTICLE_HOME)
         if len(ar)==0:
             self.error(404)
-            return 404
+            return
         template_values = {
            'articles': ar,
            'title':info[2],

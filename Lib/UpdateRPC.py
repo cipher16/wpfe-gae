@@ -66,6 +66,7 @@ def syncComments():
                 t.author = p.author
                 t.content = p.content
                 t.post = bp
+                t.date = p.date
                 t.put()
     return "Synchronisation de "+str(nbUp)+" sur "+str(nbDown)
 #unusable because WP made shit with his RPC services ... no slug

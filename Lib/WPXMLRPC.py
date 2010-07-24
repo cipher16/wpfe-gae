@@ -219,6 +219,7 @@ class WordPressClient:
         tagObj.au_mail = com['author_email']
         tagObj.au_url  = com['author_url']
         tagObj.au_ip   = com['author_ip']
+        tagObj.date    = datetime.datetime.strptime(str(com['date_created_gmt']), "%Y%m%dT%H:%M:%S")
         return tagObj
         
     def selectBlog(self, blogId):
