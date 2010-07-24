@@ -170,7 +170,6 @@ class WordPressClient:
         postObj.id                 = int(post['postid'])
         postObj.categories         = post['categories']
         postObj.allowPings         = post['mt_allow_pings'] == 1
-        print post.__str__()
         return postObj
         
     def _filterCategory(self, cat):
@@ -192,7 +191,7 @@ class WordPressClient:
         catObj.id             = int(cat['categoryId'])
         catObj.pid             = int(cat['parentId'])
         catObj.name         = cat['categoryName'] 
-        catObj.niceName     = cat['categoryName'] 
+        catObj.niceName     = cat['categorySlug']
         if cat.has_key('isPrimary'):
             catObj.isPrimary     = cat['isPrimary']
         return catObj
@@ -387,7 +386,6 @@ class WordPressClient:
                 categories = self._server.wp.getCategories(self.blogId, self.user, self.password)                
                 for cat in categories:
                     self.categories.append(self._filterWPCategory(cat))    
-
             return self.categories
         except xmlrpclib.Fault, fault:
             raise WordPressException(fault)    
@@ -413,7 +411,6 @@ class WordPressClient:
                 self.comments = []
                 comments = self._server.wp.getComments(self.blogId, self.user, self.password,[{'post_id':post_id}])                
                 for t in comments:
-                    print "Comments"+t.__str__()
                     self.comments.append(self._filterWPComments(t))    
             return self.comments
         except xmlrpclib.Fault, fault:
