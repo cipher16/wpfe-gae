@@ -3,7 +3,7 @@ from Lib.WordPress import *
 from google.appengine.ext.webapp import template
 import wpfe
 from google.appengine.api import memcache
-from Lib import RSS, DateTime, Twitter
+from Lib import RSS, DateTime
 
 #type : 
 #    home (display 10)

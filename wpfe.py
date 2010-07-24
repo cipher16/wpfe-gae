@@ -2,7 +2,6 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
 from Controllers.WPAdmin import *
-from Controllers.RSSContentUpdater import RssContentUpdater
 from Controllers.Dispatcher import *
 import os
 
@@ -39,7 +38,6 @@ application = webapp.WSGIApplication(
      #administration part
       ('/admin/upload',WPUploader),                    #import 100%
       ('/admin/import',WPImporter),                    #import 100% 
-      ('/admin/rssUpdate', RssContentUpdater),         #50% parsing OK, need DB insertion + cron --> to delete will use XML RPC request
       ('/admin/.*',WPAdmin),                     
      #blog part
       ('/', Home),                  #display several articles OK 100%
