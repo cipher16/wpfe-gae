@@ -43,3 +43,7 @@ class CDNMedia(db.Model):
     type = db.StringProperty()
     content = db.BlobProperty()
     url = db.StringProperty()
+    
+class BlogUser(db.Model):
+    name = db.StringProperty()
+    uId = db.IntegerProperty()

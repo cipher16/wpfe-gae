@@ -14,8 +14,9 @@ BLOG_ABOUT = "Blog d'un etudiant en informatique"
 
 #twitter
 TWITTER_LOGIN = "loupzeur"
-TWITTER_CACHE = 36000 # in minutes
+TWITTER_CACHE = 36000 # in minutes <-- useless now
 
+#cache
 ENABLE_CACHE   = True
 ART_CACHE_TIME = 36000   #in minutes
 CDN_CACHE_TIME = 3600000 #in minutes

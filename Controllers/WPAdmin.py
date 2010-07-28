@@ -8,6 +8,7 @@ from google.appengine.api.labs.taskqueue import taskqueue
 import Models
 from google.appengine.api import memcache
 from Lib import DateTime, WPXMLRPC, UpdateRPC
+import logging
 
 class WPAdmin(webapp.RequestHandler):
     def get(self):
@@ -60,6 +61,16 @@ class WPAdmin(webapp.RequestHandler):
             text=UpdateRPC.syncTags()
         elif par=="synccoms":
             text=UpdateRPC.syncComments()
+        elif par=="syncusers":
+            text=UpdateRPC.syncUsers()
+        elif par=="syncall":
+            taskqueue.add(url='/admin/?page=rpcupdate&par=syncrpcall',method="GET")
+            text="L'ajout de votre requete a ete mise en 'task queue' et prendra un peu de temps, merci de patienter"
+            #UpdateRPC.syncUsers()
+        elif par=="syncrpcall":
+            logging.info("Mise a jour via rpc en cours")
+            UpdateRPC.syncAll()
+            logging.info("Mise a jour via rpc termine")
         return {'ParentTmpl': wpfe.TEMPLATE+"/admin/admin.html","texte":text}
 
 class WPUploader(webapp.RequestHandler):

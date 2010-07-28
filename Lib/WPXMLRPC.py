@@ -92,6 +92,14 @@ class WordPressUser:
         self.nickname = ''
         self.email = ''
         
+class WordPressAuthors:
+    """Represents authors item
+    """    
+    def __init__(self):
+        self.id = ''
+        self.login = ''
+        self.name = ''
+
 class WordPressCategory:
     """Represents category item
     """    
@@ -152,6 +160,7 @@ class WordPressClient:
         self.categories = None
         self.comments = None
         self.tags = None
+        self.authors = None
         self._server = xmlrpclib.ServerProxy(self.url)
 
     def _filterPost(self, post):
@@ -182,6 +191,13 @@ class WordPressClient:
         if cat.has_key('isPrimary'):
             catObj.isPrimary     = cat['isPrimary']
         return catObj
+    
+    def _filterAuthors(self, cat):
+        userObj = WordPressAuthors()
+        userObj.id    = int(cat['user_id'])
+        userObj.name  = cat['display_name'] 
+        userObj.login = cat['user_login']
+        return userObj
     
     #WP getCategorie according to http://codex.wordpress.org/XML-RPC_wp#wp.getCategories
     #unable to use that shit because WP doesn't provide slug !!!! FUCK U WP
@@ -236,7 +252,7 @@ class WordPressClient:
         """
         return tuple(self.getRecentPosts(1))[0]
             
-    def getRecentPosts(self, numPosts=5):
+    def getRecentPosts(self, numPosts):
         """Get recent posts
         """
         try:
@@ -282,6 +298,20 @@ class WordPressClient:
                 blogObj.isAdmin = blog['isAdmin']
                 blogObj.url = blog['url']
                 yield blogObj
+        except xmlrpclib.Fault, fault:
+            raise WordPressException(fault)
+        
+    def getAuthors(self):
+        """Get blog's users info
+        """
+        try:
+            if not self.authors:
+                self.authors = []
+                #categories = self._server.mt.getCategoryList(self.blogId, self.user, self.password)                
+                authors = self._server.wp.getAuthors(self.blogId, self.user, self.password)                
+                for aut in authors:
+                    self.authors.append(self._filterAuthors(aut))    
+            return self.authors
         except xmlrpclib.Fault, fault:
             raise WordPressException(fault)
             
@@ -405,13 +435,13 @@ class WordPressClient:
         except xmlrpclib.Fault, fault:
             raise WordPressException(fault)
         
-    def getCommentList(self,post_id):
+    def getCommentList(self,post_id,limit=10):
         """Get blog's tag list
         """
         try:
             if not self.comments:
                 self.comments = []
-                comments = self._server.wp.getComments(self.blogId, self.user, self.password,[{'post_id':post_id}])                
+                comments = self._server.wp.getComments(self.blogId, self.user, self.password,{'post_id':post_id,'number':limit})                
                 for t in comments:
                     self.comments.append(self._filterWPComments(t))    
             return self.comments

@@ -139,16 +139,32 @@ class TagsAndCats(webapp.RequestHandler):
         
 class Feed(webapp.RequestHandler):
     def get(self):
+        data = memcache.get(wpfe.BLOG_URL+self.request.path)
         self.response.headers["Content-Type"] = "text/xml"
-        self.response.out.write(RSS.getFeedUrl(wpfe.BLOG_URL+self.request.path))
+        if data is not None and wpfe.ENABLE_CACHE:
+            self.response.out.write(data)
+            return
+        data = RSS.getFeedUrl(wpfe.BLOG_URL+self.request.path)
+        if wpfe.ENABLE_CACHE:
+            memcache.add(wpfe.BLOG_URL+self.request.path,data,(wpfe.FEED_REFRESH*60))
+        self.response.out.write(data)
         
 class CDN(webapp.RequestHandler):
     def get(self):
+        data = memcache.get(wpfe.BLOG_URL+self.request.path)
+        if data is not None and wpfe.ENABLE_CACHE:
+            self.response.headers["Content-Type"] = data.type
+            self.response.headers["Expires"] = DateTime.getGmt()
+            self.response.headers["Cache-Control"] = "max-age="+str(wpfe.CDN_CACHE_TIME)
+            self.response.out.write(data.content)
+            return
         url = self.request.path
         media = CDNMedia.getMediaByUrl(wpfe.BLOG_URL+url)
         if not media:
             self.error(404)
             return
+        if wpfe.ENABLE_CACHE:
+            memcache.add(wpfe.BLOG_URL+url,media,(wpfe.CDN_CACHE_TIME*60))
         self.response.headers["Content-Type"] = media.type
         self.response.headers["Expires"] = DateTime.getGmt()
         self.response.headers["Cache-Control"] = "max-age="+str(wpfe.CDN_CACHE_TIME)
