@@ -82,11 +82,34 @@ class WPCategory:
     def genUrl(cats):
         url = []
         for cat in cats:
-            url.append("<a href='/category/"+cat+"'>"+WPCategory.getName(cat)+"</a>")
+            url.append("<a href='/category/"+WPCategory.genUrlParent(cat)+cat+"'>"+WPCategory.getName(cat)+"</a>")
         return ",".join(url)
     @staticmethod
+    def genUrlParent(cat):
+        url=""
+        d = db.GqlQuery("SELECT * FROM BlogCategory WHERE niceName=:1",cat).fetch(1)
+        if not d:
+            return url
+        d=d[0]
+        parent = d.catParentId
+        while parent != 0:
+            p = db.GqlQuery("SELECT * FROM BlogCategory WHERE catId=:1",parent).fetch(1)
+            if not p:
+                return url
+            p = p[0]
+            url=p.niceName+"/"+url
+            parent=p.catParentId
+        return url
+    @staticmethod
     def getCategories():
-        return WordPress.BlogCategory().all().order('niceName')
+        d = db.GqlQuery("SELECT * FROM BlogCategory ORDER BY niceName").fetch(1000)
+        cats = []
+        if d:
+            for c in d:
+                c.parentUrl= WPCategory.genUrlParent(c.niceName)
+                cats.append(c)
+        return cats
+        #return WordPress.BlogCategory().all().order('niceName')
 
 class WPTags:
     @staticmethod

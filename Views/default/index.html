@@ -152,7 +152,7 @@
       <div class="sb-title">les Categories</div>
   		<ul>
 			{%for cat in categories%}
-			  <li><a href="/category/{{cat.niceName}}" title="{{cat.catName}}">{{cat.catName}}</a></li>
+			  <li><a href="/category/{{cat.parentUrl}}{{cat.niceName}}" title="{{cat.catName}}">{{cat.catName}}</a></li>
 			{%endfor%}
   		</ul>
   	</li>

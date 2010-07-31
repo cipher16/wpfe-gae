@@ -101,19 +101,26 @@ class TagsAndCats(webapp.RequestHandler):
             self.response.out.write(data)
             return 
         page=1
+
         info = self.request.path.split("/")
-        if len(info)==5:
-            page=int(info[4])
+        indexToRetrieve=len(info)-1
+        if "page" in info:
+            page=int(info[len(info)-1])
+            info.pop(-1)
+            info.pop(-1)
+            indexToRetrieve-=2
+        logging.info("index : "+str(indexToRetrieve)+ " " + str(len(info))+" "+info[indexToRetrieve])
+        urlArchive = "/".join(info)
         if info[1]=="tag":
-            ar = WPArticles.getArticlesByTag(info[2],wpfe.NB_ARTICLE_HOME,(page-1)*wpfe.NB_ARTICLE_HOME)
+            ar = WPArticles.getArticlesByTag(info[indexToRetrieve],wpfe.NB_ARTICLE_HOME,(page-1)*wpfe.NB_ARTICLE_HOME)
         elif info[1]=="category":
-            ar = WPArticles.getArticlesByCat(info[2],wpfe.NB_ARTICLE_HOME,(page-1)*wpfe.NB_ARTICLE_HOME)
+            ar = WPArticles.getArticlesByCat(info[indexToRetrieve],wpfe.NB_ARTICLE_HOME,(page-1)*wpfe.NB_ARTICLE_HOME)
         if len(ar)==0:
             self.error(404)
             return
         template_values = {
            'articles': ar,
-           'title':info[2],
+           'title':info[indexToRetrieve],#xss ??
            'ParentTmpl': wpfe.TEMPLATE+"/index.html",
            'archive':True,
            'home':True,
@@ -128,7 +135,7 @@ class TagsAndCats(webapp.RequestHandler):
            'nxtPage': (int(page)+1),
            'prvPage': (int(page)-1),
            'nbArticles':len(ar),
-           'urlArchive':"/"+info[1]+"/"+info[2]
+           'urlArchive':urlArchive
         }
         path = wpfe.TEMPLATE+"/home.html"
 #saving memcache
