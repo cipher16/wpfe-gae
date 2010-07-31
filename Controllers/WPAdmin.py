@@ -60,16 +60,23 @@ class WPAdmin(webapp.RequestHandler):
         elif par=="synctags":
             text=UpdateRPC.syncTags()
         elif par=="synccoms":
-            text=UpdateRPC.syncComments()
+            text=UpdateRPC.syncComments(50)
         elif par=="syncusers":
             text=UpdateRPC.syncUsers()
-        elif par=="syncall":
-            taskqueue.add(url='/admin/?page=rpcupdate&par=syncrpcall',method="GET")
+        elif par=="syncallart":
+            taskqueue.add(url='/admin/?page=rpcupdate&par=syncrpcallart',method="GET")
+            text="L'ajout de votre requete a ete mise en 'task queue' et prendra un peu de temps, merci de patienter"
+        elif par=="syncallcom":
+            taskqueue.add(url='/admin/?page=rpcupdate&par=syncrpcallcom',method="GET")
             text="L'ajout de votre requete a ete mise en 'task queue' et prendra un peu de temps, merci de patienter"
             #UpdateRPC.syncUsers()
-        elif par=="syncrpcall":
+        elif par=="syncrpcallart":
             logging.info("Mise a jour via rpc en cours")
-            UpdateRPC.syncAll()
+            UpdateRPC.syncPost(80)
+            logging.info("Mise a jour via rpc termine")
+        elif par=="syncrpcallcom":
+            logging.info("Mise a jour via rpc en cours")
+            UpdateRPC.syncComments(80)
             logging.info("Mise a jour via rpc termine")
         return {'ParentTmpl': wpfe.TEMPLATE+"/admin/admin.html","texte":text}
 
