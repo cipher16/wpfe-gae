@@ -45,6 +45,8 @@
         * http://docs.python.org/lib/module-xmlrpclib.html
 """
 from django.template.defaultfilters import slugify
+from cookielib import logger
+import logging
 
 __author__ = "Michele Ferretti <black.bird@tiscali.it>"
 __version__ = "$Revision: 1.0 $"
@@ -438,12 +440,16 @@ class WordPressClient:
     def getCommentList(self,post_id,limit=10):
         """Get blog's tag list
         """
+        logging.info("Getting : "+str(post_id)+" WITH : "+str(limit))
         try:
-            if not self.comments:
-                self.comments = []
-                comments = self._server.wp.getComments(self.blogId, self.user, self.password,{'post_id':post_id,'number':limit})                
-                for t in comments:
-                    self.comments.append(self._filterWPComments(t))    
+#            if not self.comments: need to dl all the time ...
+            self.comments = []
+            if post_id is not None:
+                comments = self._server.wp.getComments(self.blogId, self.user, self.password,{'post_id':post_id,"number":limit})
+            else:
+                comments = self._server.wp.getComments(self.blogId, self.user, self.password,{"number":limit})                
+            for t in comments:
+                self.comments.append(self._filterWPComments(t))    
             return self.comments
         except xmlrpclib.Fault, fault:
             raise WordPressException(fault)
