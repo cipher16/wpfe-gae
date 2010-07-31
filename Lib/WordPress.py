@@ -2,6 +2,7 @@ from google.appengine.ext import db
 from google.appengine.api import urlfetch
 from Models import WordPress
 import logging
+from Models.WordPress import BlogUser
 
 def readMore(content,url,title):
     if content.find("<!--more-->")==-1:
@@ -107,6 +108,14 @@ class WPTags:
             url.append("<a href='/tag/"+tag+"'>"+WPTags.getName(tag)+"</a>")
         return ",".join(url)
     
+class WPUser:
+    @staticmethod
+    def getUserById(id):
+        user = db.GqlQuery('SELECT * FROM BlogUser WHERE uId = :1',int(id)).fetch(1)
+        if not user:
+            return None
+        return user[0].name
+
 class CDNMedia:
     @staticmethod
     def getMediaByUrl(url):

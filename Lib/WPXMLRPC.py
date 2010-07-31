@@ -141,9 +141,11 @@ class WordPressPost:
         self.date = None
         self.permaLink = ''
         self.description = ''
+        self.content = ''
         self.textMore = ''
         self.excerpt = ''
         self.link = ''
+        self.status = ''
         self.categories = []
         self.user = ''
         self.allowPings    = False
@@ -171,6 +173,7 @@ class WordPressClient:
         postObj = WordPressPost()
         postObj.permaLink         = post['permaLink']
         postObj.description     = post['description']
+        postObj.content         = post['content']
         postObj.title             = post['title']
         postObj.excerpt         = post['mt_excerpt']
         postObj.user             = post['userid']
@@ -182,6 +185,7 @@ class WordPressClient:
         postObj.categories         = post['categories']
         postObj.tags         = post['mt_keywords']
         postObj.allowPings         = post['mt_allow_pings'] == 1
+        postObj.status          = post['post_status']
         return postObj
         
     def _filterCategory(self, cat):

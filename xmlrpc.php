@@ -2674,7 +2674,7 @@ class wp_xmlrpc_server extends IXR_Server {
 				'link' => $link,
 				'permaLink' => $link,
 				// commented out because no other tool seems to use this
-				// 'content' => $entry['post_content'],
+				'content' => $entry['post_content'],
 				'categories' => $categories,
 				'mt_excerpt' => $entry['post_excerpt'],
 				'mt_text_more' => $post['extended'],

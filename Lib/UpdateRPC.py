@@ -3,7 +3,7 @@ import wpfe
 from google.appengine.ext import db
 from Models.WordPress import BlogPost, BlogCategory, BlogTag, BlogComments,\
     BlogUser
-from Lib.WordPress import WPCategory, WPTags
+from Lib.WordPress import WPCategory, WPTags, WPUser
 import logging
 
 #look back 5 post query db and update
@@ -17,15 +17,17 @@ def syncPost(nbPost):
         for p in wp.getRecentPosts(nbPost):
             nbDown+=1
             d = db.GqlQuery("SELECT * FROM BlogPost WHERE idP = :1",p.id).fetch(1)
-            if not d:
+            user = WPUser.getUserById(p.user)
+            if not d and p.status=="publish" and user is not None:
                 nbUp+=1
                 post = BlogPost()
                 post.idP = p.id
                 post.title = p.title
-                post.content = p.description
-                post.author = p.user
+                post.content = p.content.replace(wpfe.BLOG_URL,"")
+                post.author = user
                 post.date = p.date
-                post.link = p.link
+                post.link = p.link.replace(wpfe.BLOG_URL,"")
+                post.status = p.status
                 post.type = "post"
                 for cat in p.categories:#overcrade!!!!
                     if cat is not None:
@@ -37,7 +39,7 @@ def syncPost(nbPost):
                 post.put()
         return "Synchronisation de "+str(nbUp)+" sur "+str(nbDown)
     except Exception,fault:
-        return "Une erreur est survenue, verifie ton mot de passe et ton url : "+fault.__str__()
+        return "Une erreur est survenue : "+fault.__str__()
 
 def syncTags():
     try:
