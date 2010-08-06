@@ -46,7 +46,7 @@ class Home(webapp.RequestHandler):
 #saving memcache
         render = template.render(path, template_values)
         if len(ar)>0 and wpfe.ENABLE_CACHE:
-            memcache.add(wpfe.BLOG_URL+self.request.path,render)
+            memcache.add(wpfe.BLOG_URL+self.request.path,render,(wpfe.ART_CACHE_TIME*60))
         self.response.out.write(render)
             
 class Dispatcher(webapp.RequestHandler):
@@ -91,7 +91,7 @@ class Dispatcher(webapp.RequestHandler):
         render = template.render(path, template_values)
         
         if wpfe.ENABLE_CACHE:
-            memcache.add(wpfe.BLOG_URL+self.request.path,render)
+            memcache.add(wpfe.BLOG_URL+self.request.path,render,(wpfe.ART_CACHE_TIME*60))
         self.response.out.write(render)
         
 class TagsAndCats(webapp.RequestHandler):
@@ -141,7 +141,7 @@ class TagsAndCats(webapp.RequestHandler):
 #saving memcache
         render = template.render(path, template_values)
         if wpfe.ENABLE_CACHE:
-            memcache.add(wpfe.BLOG_URL+self.request.path,render)
+            memcache.add(wpfe.BLOG_URL+self.request.path,render,(wpfe.ART_CACHE_TIME*60))
         self.response.out.write(render)
         
 class Feed(webapp.RequestHandler):
