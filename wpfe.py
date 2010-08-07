@@ -17,13 +17,13 @@ TWITTER_LOGIN = "loupzeur"
 TWITTER_CACHE = 36000 # in minutes <-- useless now
 
 #antispam
-RECAPTCHA_PUBLIC = ""
-RECAPTCHA_PRIVATE = ""
+RECAPTCHA_PUBLIC = "6LeDH7wSAAAAAKPECj8kLKnWuERklpM32IaUhTAm"
+RECAPTCHA_PRIVATE = "6LeDH7wSAAAAAAxSj9K3eMsVITAhkvo_sMnuRN-d"
 
 #cache
-ENABLE_CACHE   = False
+ENABLE_CACHE   = True
 ART_CACHE_TIME = 3600    #in minutes
-CDN_CACHE_TIME = 3600000 #in minutes
+CDN_CACHE_TIME = 360000  #in minutes
 FEED_REFRESH   = 36000   #in minutes
 NB_ARTICLE_HOME = 10     #numbers of articles to display per page
 
@@ -36,6 +36,28 @@ RPC_PASSW = '123456'
 APPLICATION_PATH = os.path.dirname(__file__)
 TEMPLATE = APPLICATION_PATH+"/Views/default"
 
+#MENU LINKS
+MENU_LINKS = [
+              {'nom':'Mes Applications/Scripts','url':'/mes-applicationsscripts/'},
+              {'nom':'Curriculum Vitae',        'url':'http://www.gaetan-grigis.eu'}
+              ]
+
+#BLOGOLIST
+
+BLOGOLIST = [
+              {'nom':'Archlinux',           'url':'http://planet.archlinux.fr/'},
+              {'nom':'BlueTouff Geek Blog', 'url':'http://bluetouff.com/'},
+              {'nom':'Brico Wifi',          'url':'http://bricowifi.blogspot.com/'},
+              {'nom':'Da Linux French Page','url':'http://linuxfr.org/pub/'},
+              {'nom':'Filtrage du net',     'url':'http://filtragedunet.blogspot.com/'},
+              {'nom':'FZ-Corp Blog',        'url':'http://fz-corp.net/'},
+              {'nom':'Geekscottes',         'url':'http://www.nojhan.net/geekscottes'},
+              {'nom':'MotRech',             'url':'http://www.motrech.com/'}
+              ]
+
+#STATISTIC
+GOOGLE_TRACKER = "UA-4895533-3" #to change according to ...
+WORDPR_TRACKER = "4245623"
 
 #do not touch below or die in hell ;)
 application = webapp.WSGIApplication(

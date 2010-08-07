@@ -42,7 +42,11 @@ class Home(webapp.RequestHandler):
            'page':page,
            'nxtPage': (int(page)+1),
            'prvPage': (int(page)-1),
-           'nbArticles':len(ar)
+           'nbArticles':len(ar),
+           'google_tracker':wpfe.GOOGLE_TRACKER,
+           'wordpr_tracker':wpfe.WORDPR_TRACKER,
+           'menus':wpfe.MENU_LINKS,
+           'blogo':wpfe.BLOGOLIST
         }
         path = wpfe.TEMPLATE+"/home.html"
 #saving memcache
@@ -92,7 +96,11 @@ class Dispatcher(webapp.RequestHandler):
             'single':True,
             'nextArticle':nx,
             'prevArticle':pr,
-            'rehtml':rehtml
+            'rehtml':rehtml,
+            'google_tracker':wpfe.GOOGLE_TRACKER,
+            'wordpr_tracker':wpfe.WORDPR_TRACKER,
+            'menus':wpfe.MENU_LINKS,
+            'blogo':wpfe.BLOGOLIST
         }
         path = wpfe.TEMPLATE+"/single.html"
 #saving memcache
@@ -180,7 +188,11 @@ class TagsAndCats(webapp.RequestHandler):
            'nxtPage': (int(page)+1),
            'prvPage': (int(page)-1),
            'nbArticles':len(ar),
-           'urlArchive':urlArchive
+           'urlArchive':urlArchive,
+           'google_tracker':wpfe.GOOGLE_TRACKER,
+           'wordpr_tracker':wpfe.WORDPR_TRACKER,
+           'menus':wpfe.MENU_LINKS,
+           'blogo':wpfe.BLOGOLIST
         }
         path = wpfe.TEMPLATE+"/home.html"
 #saving memcache
