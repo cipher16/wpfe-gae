@@ -8,7 +8,7 @@
 			<div id="post-{{ article.idP }}" class="post hentry category-uncategorized tag-2 tag-green-park tag-greenpark tag-list tag-theme tag-todo tag-todolist tag-two tag-wordpress">
 				<h2><a href="{{ article.link }}" rel="bookmark" title="{{ article.title }}">{{ article.title }}</a></h2>
 				<small class="meta">
-					<span class="alignleft">{{ article.date|date:"D d M Y" }} par {{ article.author }}</span>
+					<span class="alignleft">{{ article.date|timesince}} par {{ article.author }}</span>
 					<span class="alignright"><a href="{{article.link}}#comments" title="{{ article.title }}" class="button-style" rel="nofollow"> {% ifequal article.comments.count 0%}Pas de commentaire{%else%} {{article.comments.count}} commentaire{{article.comments.count|pluralize}}{%endifequal%} &#187;</a></span>
         		</small>
 				<div class="entry">
@@ -29,7 +29,7 @@
 
 			<div  class="post hentry category-uncategorized tag-2 tag-green-park tag-greenpark tag-list tag-theme tag-todo tag-todolist tag-two tag-wordpress">
 				<h2><a href="#" rel="bookmark" title="pas d'article trouvé">Aucun article trouvé</a></h2>
-				<div class="entry">Aucun article n'a été trouvé dans la base de données, pour importer vos article, uploadez un export de votre blog wordpress au format XML (par défaut), en accédant à la partie <a href="/admin/">administration</a>.</div>
+				<div class="entry">Aucun article n'a été trouvé dans la base de données, pour importer vos articles, uploadez un export de votre blog wordpress au format XML (par défaut), ou par XML-RPC en accédant à la partie <a href="/admin/">administration</a>.</div>
 			</div>
 
 		{%endif%}
